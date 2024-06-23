@@ -1,0 +1,187 @@
+/* Reset and basic styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f0f0f0;
+    color: #333333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: #007bff;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+header p {
+    color: #666666;
+    font-size: 1.2rem;
+}
+
+section {
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.section-title {
+    color: #333333;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+/* Discover What We Offer Section */
+section#offerings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.offer-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex: 1;
+    min-width: 300px;
+}
+
+.offer-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.offer-content {
+    flex: 1;
+}
+
+.offer-content h3 {
+    color: #333333;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.offer-content p {
+    color: #666666;
+    margin-bottom: 20px;
+}
+
+.offer-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.offer-image img:hover {
+    transform: scale(1.05);
+}
+
+/* Collaborations Section */
+section#collaborations {
+    padding: 30px;
+    background-color: #f8f9fa;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.logo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 30px;
+    justify-items: center;
+    align-items: center;
+}
+
+.logo-grid img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.logo-grid img:hover {
+    transform: scale(1.05);
+}
+
+/* Button */
+.btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    clear: both;
+    margin-top: 30px;
+    border-top: 1px solid #e9ecef;
+}
+
+footer p {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    section {
+        padding: 20px;
+    }
+
+    section#offerings {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .offer-item {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .offer-item {
+        padding: 15px;
+    }
+}
