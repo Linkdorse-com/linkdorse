@@ -18,7 +18,7 @@ body {
 }
 
 header {
-    background-color: #333;
+    background-color: #0073e6;
     color: #fff;
     text-align: center;
     padding: 2rem 0;
@@ -93,6 +93,7 @@ h2 {
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
 }
 
 .brand img {
