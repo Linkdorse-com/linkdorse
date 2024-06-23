@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Sales</title>
+    <link rel="stylesheet" href="contactsales.css">
+</head>
+<body>
+    <div class="container" id="mainbox">
+        <h1>Contact Sales</h1>
+        <p style="font-size: x-large;">For inquiries or to get started with us, <b> please contact us via email or fill out the form below to request a callback. </b></p>
+
+        <div class="contact-info">
+            <p style="font-size: x-large ;">Email: <a href="mailto:sales@example.com">sales@example.com</a></p>
+        </div>
+
+        <h2>Request a Callback</h2>
+        <form action="https://docs.google.com/forms/d/e/your-form-id/formResponse" method="POST" target="_blank">
+            <label for="name">Your Brand Name</label>
+            <input type="text" id="name" name="entry.1234567890" required>
+            
+            <label for="phone">Your Phone Number or mail id</label>
+            <input type="tel" id="phone" name="entry.0987654321" required>
+
+            <label for="website">Your website url   </label>
+            <textarea id="message" name="entry.2468013579" rows="1"></textarea>
+            
+            <label for="message">Additional Information (optional)</label>
+            <textarea id="message" name="entry.2468013579" rows="4"></textarea>
+            
+            <button type="submit">Request Callback</button>
+        </form>
+    </div>
+</body>
+</html>
