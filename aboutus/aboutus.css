@@ -5,6 +5,7 @@
     box-sizing: border-box;
 }
 
+
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
@@ -15,7 +16,7 @@ body {
     font-size: 5em;
     letter-spacing: 15px;
     color: #0e3742;
-    margin-top: -8%;
+    margin-top: -1%;
     text-transform: uppercase;
     width: 100%;
     -webkit-box-reflect: below 1px linear-gradient(transparent, #0008);
@@ -159,13 +160,18 @@ p.aboutit {
     /* Vision Section Styles */
    
     #visionp{
-        margin-top: 3%;    
+        margin-top: 3%; 
+        font-size: xx-large;
+        font-weight: bolder;   
+    }
+    #visionlist{
+        font-size: xx-large;
     }
     #vision {
         position: relative;
         font-size: 3em;
         letter-spacing: 15px;
-        color: #0e3742;
+        color: #0b5e75;
         margin-top: 1%;
         text-transform: uppercase;
         width: 100%;
@@ -175,6 +181,7 @@ p.aboutit {
         align-items: center;
         text-align: center;
     }
+    
 
 @keyframes fadeInRight {
     from {
@@ -195,6 +202,7 @@ p.aboutit {
         opacity: 1;
     }
 }
+/* Our Story Section */
 #story{
     background-color: #07252d;
 }
@@ -208,7 +216,7 @@ p.aboutit {
     letter-spacing: 15px;
     color: #0e3742;
 }
-/* Our Story Section */
+
 .story-section {
     background-color: #fff;
     color: #e9e0e0;
@@ -267,11 +275,13 @@ p.aboutit {
 
 .team-section .team-member img:hover {
     transform: scale(1.1);
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+    box-shadow: 0px 0px 20px rgba(232, 231, 231, 0.2); /* Increase shadow on hover */
 }
 
 .team-section .team-member p {
     margin: 10px 0;
+    color: #e9e0e0;
+    font-weight: 600;
 }
 
 /* Contact Us Section */
@@ -364,3 +374,4 @@ footer {
         opacity: 1;
     }
 }
+
