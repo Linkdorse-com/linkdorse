@@ -3,145 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enter Phone Number</title>
-    <style>
-        /* Global reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #07252d   ;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
-            height: 650px;
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .brand-logo {
-            width: 80px;
-            margin-bottom: 20px;
-        }
-
-        #phone{
-            font-size: larger;
-            margin-top: 40px;
-        }
-        .brand-name {
-            color: #333;
-            font-size: 24px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            color: #333;
-            font-size: 22px;
-        }
-
-        input[type="tel"] {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            box-sizing: border-box;
-        }
-
-        input[type="tel"]:focus {
-            outline: none;
-            border-color: #6a7eff;
-            box-shadow: 0 0 8px rgba(106, 126, 255, 0.5);
-        }
-
-        input[type="submit"] {
-            background-color: #6a7eff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 6px;
-            padding: 14px 20px;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            width: 100%;
-            max-width: 100%;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #5c6ee8;
-        }
-
-        .info-text {
-            color: #666;
-            font-size: 20px;
-            margin-top: 10px;
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 30px;
-            }
-            .brand-logo {
-                width: 60px;
-            }
-            .brand-name {
-                font-size: 20px;
-            }
-            h2 {
-                font-size: 20px;
-            }
-        }
-    </style>
+    <title>Influencer Network</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <!-- <img src="path_to_your_logo.png" alt="Your Brand Logo" class="brand-logo"> -->
-        <img src="https://via.placeholder.com/100x100?text=Logo" alt="Brand Logo">
-        <div class="brand-name">Your Brand Name</div>
-        <h1>Enter Your Phone Number to Continue</h1>
-        <form id="phone-form" action="#" method="POST" onsubmit="return validatePhoneNumber()">
-            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
-            <input type="submit" value="Continue">
-            <div class="info-text"><br>We'll contact you through this phone no. if required. <br> <br> Ensure to give correct phoneNumber to have no hassle in taking paments.</div>
-        </form>
-    </div>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="#" alt="logo">
 
-    <script>
-        function validatePhoneNumber() {
-            var phoneNumber = document.getElementById("phone").value.trim();
-            var phoneRegex = /^\d{10}$/; // Simple regex for 10-digit phone number
+            </div>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#collaborations">Collaborations</a></li>
+                <li><a href="#steps">Join Us</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+            </ul>
+        </nav>
+        <div class="hero">
+            <h1>Join Our Influencer Network</h1>
+            <p>Connect with top brands and grow your influence.</p>
+            <a href="#steps" class="cta-button">Get Started</a>
+        </div>
+    </header>
 
-            if (!phoneRegex.test(phoneNumber)) {
-                alert("Please enter a valid 10-digit phone number.");
-                return false;
-            }
+    <main>
+        <section id="features">
+            <h2>What We Provide</h2>
+            <div class="feature">
+                <img src="placeholder1.jpg" alt="Feature 1">
+                <div class="feature-content">
+                    <h3>Feature 1 Title</h3>
+                    <p>Description of feature 1.</p>
+                </div>
+            </div>
+            <div class="feature">
+                <img src="placeholder2.jpg" alt="Feature 2">
+                <div class="feature-content">
+                    <h3>Feature 2 Title</h3>
+                    <p>Description of feature 2.</p>
+                </div>
+            </div>
+            <!-- Repeat for other features -->
+        </section>
 
-            // Continue with your logic here (e.g., send verification code, redirect to next page)
+        <section id="collaborations">
+            <h2>Brands We've Collaborated With</h2>
+            <div class="brand-scroll-container">
+                <div class="brand">
+                    <img src="brand1.jpg" alt="Brand 1">
+                    <div class="brand-info">
+                        <h3>Brand 1</h3>
+                        <p>Description of Brand 1 goes here.</p>
+                    </div>
+                </div>
+                <div class="brand">
+                    <img src="brand2.jpg" alt="Brand 2">
+                    <div class="brand-info">
+                        <h3>Brand 2</h3>
+                        <p>Description of Brand 2 goes here.</p>
+                    </div>
+                </div>
+                <!-- Repeat for other brands -->
+            </div>
+        </section>
 
-            return true;
-        }
-    </script>
+        <section id="steps">
+            <h2>Steps to Join Us</h2>
+            <div class="step">
+                <img src="step1-icon.png" alt="Step 1 Icon">
+                <div class="step-content">
+                    <h3>Step 1: Lorem ipsum dolor sit amet</h3>
+                    <p>Description of Step 1 goes here.</p>
+                </div>
+            </div>
+            <div class="step">
+                <img src="step2-icon.png" alt="Step 2 Icon">
+                <div class="step-content">
+                    <h3>Step 2: Consectetur adipiscing elit</h3>
+                    <p>Description of Step 2 goes here.</p>
+                </div>
+            </div>
+            <div class="step">
+                <img src="step3-icon.png" alt="Step 3 Icon">
+                <div class="step-content">
+                    <h3>Step 3: Sed do eiusmod tempor incididunt</h3>
+                    <p>Description of Step 3 goes here.</p>
+                </div>
+            </div>
+            <div class="step">
+                <img src="step4-icon.png" alt="Step 4 Icon">
+                <div class="step-content">
+                    <h3>Step 4: Ut labore et dolore magna aliqua</h3>
+                    <p>Description of Step 4 goes here.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials">
+            <h2>Testimonials</h2>
+            <div class="testimonial">
+                <img src="testimonial1.jpg" alt="Testimonial 1">
+                <blockquote>"Testimonial quote goes here."</blockquote>
+                <cite>- Testimonial Person, Company</cite>
+            </div>
+            <div class="testimonial">
+                <img src="testimonial2.jpg" alt="Testimonial 2">
+                <blockquote>"Another testimonial quote."</blockquote>
+                <cite>- Another Testimonial Person, Company</cite>
+            </div>
+            <!-- Repeat for other testimonials -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 InfluencerNet. All rights reserved.</p>
+    </footer>
 </body>
 </html>
