@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Influencer-Brand Platform Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="#" @click="currentTab = 'dashboard'">Dashboard</a></li>
+                    <li><a href="#" @click="currentTab = 'campaigns'">Campaigns</a></li>
+                    <li><a href="#" @click="currentTab = 'messages'">Messages</a></li>
+                    <li><a href="#" @click="currentTab = 'payments'">Payments</a></li>
+                    <li><a href="#" @click="currentTab = 'profile'">Profile</a></li>
+                    <li><a href="#" @click="currentTab = 'settings'">Settings</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <div v-show="currentTab === 'dashboard'">
+                <section class="summary">
+                    <h2>Dashboard Summary</h2>
+                    <div class="summary-item">
+                        <p>Total Campaigns: {{ totalCampaigns }}</p>
+                        <p>Active Campaigns: {{ activeCampaigns }}</p>
+                        <p>Pending Payments: ${{ pendingPayments }}</p>
+                        <p>New Messages: {{ newMessages }}</p>
+                    </div>
+                </section>
+            </div>
+            <div v-show="currentTab === 'campaigns'">
+                <section class="campaigns">
+                    <h2>Active Campaigns</h2>
+                    <div v-for="campaign in activeCampaignList" :key="campaign.id" class="campaign-item">
+                        <h3>{{ campaign.name }}</h3>
+                        <p>Brand: {{ campaign.brand }}</p>
+                        <p>Status: {{ campaign.status }}</p>
+                        <p>Deadline: {{ campaign.deadline }}</p>
+                    </div>
+                </section>
+            </div>
+            <div v-show="currentTab === 'messages'">
+                <section class="messages">
+                    <h2>Messages/Inbox</h2>
+                    <ul>
+                        <li v-for="message in messages" :key="message.id">{{ message.content }}</li>
+                    </ul>
+                </section>
+            </div>
+            <div v-show="currentTab === 'payments'">
+                <section class="payments">
+                    <h2>Payments</h2>
+                    <div class="payment-summary">
+                        <p>Total Earnings: ${{ totalEarnings }}</p>
+                        <p>Pending Payments: ${{ pendingPayments }}</p>
+                    </div>
+                    <div class="payment-history">
+                        <h3>Payment History</h3>
+                        <ul>
+                            <li v-for="payment in paymentHistory" :key="payment.id">
+                                Payment {{ payment.id }}: ${{ payment.amount }} ({{ payment.status }})
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+            <div v-show="currentTab === 'profile'">
+                <section class="profile-settings">
+                    <h2>Profile Settings</h2>
+                    <ul>
+                        <li>Edit Personal Information</li>
+                        <li>Change Password</li>
+                        <li>Manage Social Media Accounts</li>
+                    </ul>
+                </section>
+            </div>
+            <div v-show="currentTab === 'settings'">
+                <section class="settings">
+                    <h2>Settings</h2>
+                    <p>Placeholder for settings</p>
+                </section>
+            </div>
+        </main>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
