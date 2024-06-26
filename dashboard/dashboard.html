@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Influencer-Brand Platform Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.css">
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
     <div id="app">
@@ -17,41 +17,16 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="#" @click="changeTab('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li><a href="#" @click="changeTab('campaigns')"><i class="fas fa-bullhorn"></i> Campaigns</a></li>
-                    <li><a href="#" @click="changeTab('messages')"><i class="fas fa-envelope"></i> Messages</a></li>
-                    <li><a href="#" @click="changeTab('payments')"><i class="fas fa-dollar-sign"></i> Payments</a></li>
-                    <li><a href="#" @click="changeTab('profile')"><i class="fas fa-user"></i> Profile</a></li>
-                    <li><a href="#" @click="changeTab('settings')"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#" @click.prevent="changeTab('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="#" @click.prevent="changeTab('campaigns')"><i class="fas fa-bullhorn"></i> Campaigns</a></li>
+                    <li><a href="#" @click.prevent="changeTab('messages')"><i class="fas fa-envelope"></i> Messages</a></li>
+                    <li><a href="#" @click.prevent="changeTab('payments')"><i class="fas fa-dollar-sign"></i> Payments</a></li>
+                    <li><a href="#" @click.prevent="changeTab('profile')"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="#" @click.prevent="changeTab('settings')"><i class="fas fa-cog"></i> Settings</a></li>
                     <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
             </nav>
         </header>
-        <aside>
-            <ul>
-                <li @click="changeTab('dashboard')" :class="{active: currentTab === 'dashboard'}">
-                    <i class="fas fa-tachometer-alt"></i> <span>Dashboard</span>
-                </li>
-                <li @click="changeTab('campaigns')" :class="{active: currentTab === 'campaigns'}">
-                    <i class="fas fa-bullhorn"></i> <span>Campaigns</span>
-                </li>
-                <li @click="changeTab('messages')" :class="{active: currentTab === 'messages'}">
-                    <i class="fas fa-envelope"></i> <span>Messages</span>
-                </li>
-                <li @click="changeTab('payments')" :class="{active: currentTab === 'payments'}">
-                    <i class="fas fa-dollar-sign"></i> <span>Payments</span>
-                </li>
-                <li @click="changeTab('profile')" :class="{active: currentTab === 'profile'}">
-                    <i class="fas fa-user"></i> <span>Profile</span>
-                </li>
-                <li @click="changeTab('settings')" :class="{active: currentTab === 'settings'}">
-                    <i class="fas fa-cog"></i> <span>Settings</span>
-                </li>
-                <li>
-                    <a href="#"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
-                </li>
-            </ul>
-        </aside>
         <main>
             <transition name="fade" mode="out-in">
                 <div v-if="currentTab === 'dashboard'" key="dashboard">
@@ -172,7 +147,7 @@
             </transition>
         </main>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>

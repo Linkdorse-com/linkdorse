@@ -36,11 +36,12 @@ header .logo h1 {
 
 header nav ul {
   list-style-type: none;
+  display: flex;
+  gap: 15px;
 }
 
 header nav ul li {
-  display: inline-block;
-  margin: 0 10px;
+  margin: 0;
 }
 
 header nav ul li a {
@@ -55,45 +56,13 @@ header nav ul li a:hover {
   color: #ffc107;
 }
 
-aside {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 200px;
-  background-color: #343a40;
-  padding-top: 60px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-aside ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-aside ul li {
-  padding: 15px;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-aside ul li.active,
-aside ul li:hover {
-  background-color: #495057;
-}
-
-aside ul li i {
-  margin-right: 10px;
-}
-
 main {
-  margin-left: 220px;
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s;
   border-radius: 8px;
+  margin: 20px;
 }
 
 h2 {
