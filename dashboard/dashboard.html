@@ -4,91 +4,292 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Influencer-Brand Platform Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.css">
 </head>
 <body>
     <div id="app">
         <header>
+            <div class="logo">
+                <img src="https://via.placeholder.com/50" alt="Company Logo">
+                <h1>BrandInfluence</h1>
+            </div>
             <nav>
                 <ul>
-                    <li><a href="#" @click="currentTab = 'dashboard'">Dashboard</a></li>
-                    <li><a href="#" @click="currentTab = 'campaigns'">Campaigns</a></li>
-                    <li><a href="#" @click="currentTab = 'messages'">Messages</a></li>
-                    <li><a href="#" @click="currentTab = 'payments'">Payments</a></li>
-                    <li><a href="#" @click="currentTab = 'profile'">Profile</a></li>
-                    <li><a href="#" @click="currentTab = 'settings'">Settings</a></li>
-                    <li><a href="#">Logout</a></li>
+                    <li><a href="#" @click="changeTab('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="#" @click="changeTab('campaigns')"><i class="fas fa-bullhorn"></i> Campaigns</a></li>
+                    <li><a href="#" @click="changeTab('messages')"><i class="fas fa-envelope"></i> Messages</a></li>
+                    <li><a href="#" @click="changeTab('payments')"><i class="fas fa-dollar-sign"></i> Payments</a></li>
+                    <li><a href="#" @click="changeTab('profile')"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="#" @click="changeTab('settings')"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
             </nav>
         </header>
+        <aside>
+            <ul>
+                <li @click="changeTab('dashboard')" :class="{active: currentTab === 'dashboard'}">
+                    <i class="fas fa-tachometer-alt"></i> <span>Dashboard</span>
+                </li>
+                <li @click="changeTab('campaigns')" :class="{active: currentTab === 'campaigns'}">
+                    <i class="fas fa-bullhorn"></i> <span>Campaigns</span>
+                </li>
+                <li @click="changeTab('messages')" :class="{active: currentTab === 'messages'}">
+                    <i class="fas fa-envelope"></i> <span>Messages</span>
+                </li>
+                <li @click="changeTab('payments')" :class="{active: currentTab === 'payments'}">
+                    <i class="fas fa-dollar-sign"></i> <span>Payments</span>
+                </li>
+                <li @click="changeTab('profile')" :class="{active: currentTab === 'profile'}">
+                    <i class="fas fa-user"></i> <span>Profile</span>
+                </li>
+                <li @click="changeTab('settings')" :class="{active: currentTab === 'settings'}">
+                    <i class="fas fa-cog"></i> <span>Settings</span>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+                </li>
+            </ul>
+        </aside>
         <main>
-            <div v-show="currentTab === 'dashboard'">
-                <section class="summary">
-                    <h2>Dashboard Summary</h2>
-                    <div class="summary-item">
-                        <p>Total Campaigns: {{ totalCampaigns }}</p>
-                        <p>Active Campaigns: {{ activeCampaigns }}</p>
-                        <p>Pending Payments: ${{ pendingPayments }}</p>
-                        <p>New Messages: {{ newMessages }}</p>
-                    </div>
-                </section>
-            </div>
-            <div v-show="currentTab === 'campaigns'">
-                <section class="campaigns">
-                    <h2>Active Campaigns</h2>
-                    <div v-for="campaign in activeCampaignList" :key="campaign.id" class="campaign-item">
-                        <h3>{{ campaign.name }}</h3>
-                        <p>Brand: {{ campaign.brand }}</p>
-                        <p>Status: {{ campaign.status }}</p>
-                        <p>Deadline: {{ campaign.deadline }}</p>
-                    </div>
-                </section>
-            </div>
-            <div v-show="currentTab === 'messages'">
-                <section class="messages">
-                    <h2>Messages/Inbox</h2>
-                    <ul>
-                        <li v-for="message in messages" :key="message.id">{{ message.content }}</li>
-                    </ul>
-                </section>
-            </div>
-            <div v-show="currentTab === 'payments'">
-                <section class="payments">
-                    <h2>Payments</h2>
-                    <div class="payment-summary">
-                        <p>Total Earnings: ${{ totalEarnings }}</p>
-                        <p>Pending Payments: ${{ pendingPayments }}</p>
-                    </div>
-                    <div class="payment-history">
-                        <h3>Payment History</h3>
+            <transition name="fade" mode="out-in">
+                <div v-if="currentTab === 'dashboard'" key="dashboard">
+                    <section class="summary">
+                        <h2>Dashboard Summary</h2>
+                        <div class="summary-item">
+                            <div class="widget">
+                                <i class="fas fa-chart-line"></i>
+                                <p>Total Campaigns</p>
+                                <h3>{{ totalCampaigns }}</h3>
+                            </div>
+                            <div class="widget">
+                                <i class="fas fa-bullhorn"></i>
+                                <p>Active Campaigns</p>
+                                <h3>{{ activeCampaigns }}</h3>
+                            </div>
+                            <div class="widget">
+                                <i class="fas fa-dollar-sign"></i>
+                                <p>Pending Payments</p>
+                                <h3>${{ pendingPayments }}</h3>
+                            </div>
+                            <div class="widget">
+                                <i class="fas fa-envelope"></i>
+                                <p>New Messages</p>
+                                <h3>{{ newMessages }}</h3>
+                            </div>
+                        </div>
+                        <div class="charts">
+                            <canvas id="campaignChart"></canvas>
+                            <canvas id="earningsChart"></canvas>
+                        </div>
+                    </section>
+                    <section class="recent-activities">
+                        <h2>Recent Activities</h2>
                         <ul>
-                            <li v-for="payment in paymentHistory" :key="payment.id">
-                                Payment {{ payment.id }}: ${{ payment.amount }} ({{ payment.status }})
+                            <li v-for="activity in recentActivities" :key="activity.id">
+                                <i class="fas fa-bell"></i> {{ activity.content }}
                             </li>
                         </ul>
-                    </div>
-                </section>
-            </div>
-            <div v-show="currentTab === 'profile'">
-                <section class="profile-settings">
-                    <h2>Profile Settings</h2>
-                    <ul>
-                        <li>Edit Personal Information</li>
-                        <li>Change Password</li>
-                        <li>Manage Social Media Accounts</li>
-                    </ul>
-                </section>
-            </div>
-            <div v-show="currentTab === 'settings'">
-                <section class="settings">
-                    <h2>Settings</h2>
-                    <p>Placeholder for settings</p>
-                </section>
-            </div>
+                    </section>
+                    <section class="top-campaigns">
+                        <h2>Top Performing Campaigns</h2>
+                        <div v-for="campaign in topCampaigns" :key="campaign.id" class="campaign-item">
+                            <h3>{{ campaign.name }}</h3>
+                            <p>Brand: {{ campaign.brand }}</p>
+                            <p>Status: <span :class="getStatusClass(campaign.status)">{{ campaign.status }}</span></p>
+                            <p>Engagement: {{ campaign.engagement }}%</p>
+                        </div>
+                    </section>
+                </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+                <div v-if="currentTab === 'campaigns'" key="campaigns">
+                    <section class="campaigns">
+                        <h2>Active Campaigns</h2>
+                        <div v-for="campaign in activeCampaignList" :key="campaign.id" class="campaign-item">
+                            <h3>{{ campaign.name }}</h3>
+                            <p>Brand: {{ campaign.brand }}</p>
+                            <p>Status: <span :class="getStatusClass(campaign.status)">{{ campaign.status }}</span></p>
+                            <p>Deadline: {{ campaign.deadline }}</p>
+                        </div>
+                    </section>
+                </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+                <div v-if="currentTab === 'messages'" key="messages">
+                    <section class="messages">
+                        <h2>Messages/Inbox</h2>
+                        <ul>
+                            <li v-for="message in messages" :key="message.id">
+                                <i class="fas fa-envelope"></i> {{ message.content }}
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+                <div v-if="currentTab === 'payments'" key="payments">
+                    <section class="payments">
+                        <h2>Payments</h2>
+                        <div class="payment-summary">
+                            <p>Total Earnings: ${{ totalEarnings }}</p>
+                            <p>Pending Payments: ${{ pendingPayments }}</p>
+                        </div>
+                        <div class="payment-history">
+                            <h3>Payment History</h3>
+                            <ul>
+                                <li v-for="payment in paymentHistory" :key="payment.id">
+                                    Payment {{ payment.id }}: ${{ payment.amount }} ({{ payment.status }})
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+                <div v-if="currentTab === 'profile'" key="profile">
+                    <section class="profile-settings">
+                        <h2>Profile Settings</h2>
+                        <div class="profile-info">
+                            <img src="https://via.placeholder.com/150" alt="User Avatar" class="avatar">
+                            <ul>
+                                <li>Edit Personal Information</li>
+                                <li>Change Password</li>
+                                <li>Manage Social Media Accounts</li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+                <div v-if="currentTab === 'settings'" key="settings">
+                    <section class="settings">
+                        <h2>Settings</h2>
+                        <p>Placeholder for settings</p>
+                    </section>
+                </div>
+            </transition>
         </main>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                currentTab: 'dashboard',
+                totalCampaigns: 12,
+                activeCampaigns: 3,
+                pendingPayments: 1500,
+                newMessages: 5,
+                activeCampaignList: [
+                    { id: 1, name: 'Campaign 1', brand: 'XYZ', status: 'Active', deadline: '30th June 2024' },
+                    { id: 2, name: 'Campaign 2', brand: 'ABC', status: 'Active', deadline: '15th July 2024' }
+                ],
+                messages: [
+                    { id: 1, content: 'Message from Brand XYZ' },
+                    { id: 2, content: 'Message from Brand ABC' }
+                ],
+                totalEarnings: 5000,
+                paymentHistory: [
+                    { id: 1, amount: 500, status: 'Completed' },
+                    { id: 2, amount: 1000, status: 'Pending' }
+                ],
+                recentActivities: [
+                    { id: 1, content: 'New campaign launched by Brand XYZ' },
+                    { id: 2, content: 'Payment received from Brand ABC' }
+                ],
+                topCampaigns: [
+                    { id: 1, name: 'Campaign 1', brand: 'XYZ', status: 'Active', engagement: 75 },
+                    { id: 2, name: 'Campaign 2', brand: 'ABC', status: 'Active', engagement: 82 }
+                ]
+            },
+            methods: {
+                changeTab(tab) {
+                    this.currentTab = tab;
+                    this.$nextTick(() => {
+                        if (tab === 'dashboard') {
+                            this.renderCharts();
+                        }
+                    });
+                },
+                renderCharts() {
+                    const ctx1 = document.getElementById('campaignChart').getContext('2d');
+                    new Chart(ctx1, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Total Campaigns', 'Active Campaigns'],
+                            datasets: [{
+                                data: [this.totalCampaigns, this.activeCampaigns],
+                                backgroundColor: ['#36A2EB', '#FF6384']
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            let label = context.label || '';
+                                            if (label) {
+                                                label += ': ';
+                                            }
+                                            if (context.raw !== null) {
+                                                label += context.raw;
+                                            }
+                                            return label;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    const ctx2 = document.getElementById('earningsChart').getContext('2d');
+                    new Chart(ctx2, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Total Earnings', 'Pending Payments'],
+                            datasets: [{
+                                data: [this.totalEarnings, this.pendingPayments],
+                                backgroundColor: ['#4BC0C0', '#FFCE56']
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            let label = context.label || '';
+                                            if (label) {
+                                                label += ': $';
+                                            }
+                                            if (context.raw !== null) {
+                                                label += context.raw;
+                                            }
+                                            return label;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                },
+                getStatusClass(status) {
+                    return {
+                        'active-status': status === 'Active',
+                        'pending-status': status === 'Pending',
+                        'completed-status': status === 'Completed'
+                    };
+                }
+            },
+            mounted() {
+                this.renderCharts();
+            }
+        });
+    </script>
 </body>
 </html>
