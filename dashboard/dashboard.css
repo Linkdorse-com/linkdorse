@@ -11,6 +11,17 @@ body {
   background-color: #f8f9fa;
 }
 
+.requestpayout{
+  display: inline-block;
+    margin-top: 35px;
+    padding: 12px 20px;
+    background-color: rgb(242, 30, 11);
+    color: rgb(241, 239, 239);
+    text-decoration: none;
+    border-radius: 15px;
+    font-size: 1.2em;
+}
+
 header {
   display: flex;
   justify-content: space-between;

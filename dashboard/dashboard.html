@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Influencer-Brand Platform Dashboard</title>
+    <title>Influencer Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.css">
     <link rel="stylesheet" href="dashboard.css">
@@ -13,13 +13,13 @@
         <header>
             <div class="logo">
                 <img src="https://via.placeholder.com/50" alt="Company Logo">
-                <h1>BrandInfluence</h1>
+                <h1>BranVolt</h1>
             </div>
             <nav>
                 <ul>
                     <li><a href="#" @click.prevent="changeTab('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li><a href="#" @click.prevent="changeTab('campaigns')"><i class="fas fa-bullhorn"></i> Campaigns</a></li>
-                    <li><a href="#" @click.prevent="changeTab('messages')"><i class="fas fa-envelope"></i> Messages</a></li>
+                    <li><a href="#" @click.prevent="changeTab('campaigns')"><i class="fas fa-bullhorn"></i> Collabs</a></li>
+                    <li><a href="#" @click.prevent="changeTab('messages')"><i class="fas fa-envelope"></i> Notifications</a></li>
                     <li><a href="#" @click.prevent="changeTab('payments')"><i class="fas fa-dollar-sign"></i> Payments</a></li>
                     <li><a href="#" @click.prevent="changeTab('profile')"><i class="fas fa-user"></i> Profile</a></li>
                     <li><a href="#" @click.prevent="changeTab('settings')"><i class="fas fa-cog"></i> Settings</a></li>
@@ -88,6 +88,14 @@
                             <p>Status: <span :class="getStatusClass(campaign.status)">{{ campaign.status }}</span></p>
                             <p>Deadline: {{ campaign.deadline }}</p>
                         </div>
+                        <h2>Avilable Campaigns</h2>
+                        <div v-for="campaign in avilableCampaignList" :key="campaign.id" class="campaign-item">
+                            <h3>{{ campaign.name }}</h3>
+                            <p>Brand: {{ campaign.brand }}</p>
+                            <p>Status: <span :class="getStatusClass(campaign.status)">{{ campaign.status }}</span></p>
+                            <p>Deadline: {{ campaign.deadline }}</p>
+                            <p><a href="#">Visit website and source product.</a></p>
+                        </div>
                     </section>
                 </div>
             </transition>
@@ -108,16 +116,21 @@
                     <section class="payments">
                         <h2>Payments</h2>
                         <div class="payment-summary">
-                            <p>Total Earnings: ${{ totalEarnings }}</p>
-                            <p>Pending Payments: ${{ pendingPayments }}</p>
+                            <p>Total Earnings: Rs. {{ totalEarnings }}</p>
+                            <p>Pending Payments: Rs. {{ pendingPayments }}</p>
                         </div>
                         <div class="payment-history">
                             <h3>Payment History</h3>
                             <ul>
                                 <li v-for="payment in paymentHistory" :key="payment.id">
-                                    Payment {{ payment.id }}: ${{ payment.amount }} ({{ payment.status }})
+                                    Payment {{ payment.id }}: Rs. {{ payment.amount }} ({{ payment.status }})
                                 </li>
                             </ul>
+                        </div>
+                        <div class="requestpayout">
+                            <p>
+                                <a href="payoutrequest\payreq.html">Request payout</a>
+                            </p>
                         </div>
                     </section>
                 </div>
@@ -128,6 +141,11 @@
                         <h2>Profile Settings</h2>
                         <div class="profile-info">
                             <img src="https://via.placeholder.com/150" alt="User Avatar" class="avatar">
+                            <ul>
+                                <li v-for="persnal info" key:"name">
+                                    Name: {{name}}
+                                </li> 
+                            </ul>
                             <ul>
                                 <li>Edit Personal Information</li>
                                 <li>Change Password</li>
