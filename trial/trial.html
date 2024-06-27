@@ -17,16 +17,45 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="#" @click.prevent="changeTab('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li><a href="#" @click.prevent="changeTab('campaigns')"><i class="fas fa-bullhorn"></i> Campaigns</a></li>
-                    <li><a href="#" @click.prevent="changeTab('messages')"><i class="fas fa-envelope"></i> Messages</a></li>
-                    <li><a href="#" @click.prevent="changeTab('payments')"><i class="fas fa-dollar-sign"></i> Payments</a></li>
-                    <li><a href="#" @click.prevent="changeTab('profile')"><i class="fas fa-user"></i> Profile</a></li>
-                    <li><a href="#" @click.prevent="changeTab('settings')"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#" @click="changeTab('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="#" @click="changeTab('campaigns')"><i class="fas fa-bullhorn"></i> Campaigns</a></li>
+                    <li><a href="#" @click="changeTab('messages')"><i class="fas fa-envelope"></i> Messages</a></li>
+                    <li><a href="#" @click="changeTab('payments')"><i class="fas fa-dollar-sign"></i> Payments</a></li>
+                    <li><a href="#" @click="changeTab('profile')"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="#" @click="changeTab('settings')"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#" @click="changeTab('notifications')"><i class="fas fa-bell"></i> Notifications</a></li>
                     <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
             </nav>
         </header>
+        <aside>
+            <ul>
+                <li @click="changeTab('dashboard')" :class="{active: currentTab === 'dashboard'}">
+                    <i class="fas fa-tachometer-alt"></i> <span>Dashboard</span>
+                </li>
+                <li @click="changeTab('campaigns')" :class="{active: currentTab === 'campaigns'}">
+                    <i class="fas fa-bullhorn"></i> <span>Campaigns</span>
+                </li>
+                <li @click="changeTab('messages')" :class="{active: currentTab === 'messages'}">
+                    <i class="fas fa-envelope"></i> <span>Messages</span>
+                </li>
+                <li @click="changeTab('payments')" :class="{active: currentTab === 'payments'}">
+                    <i class="fas fa-dollar-sign"></i> <span>Payments</span>
+                </li>
+                <li @click="changeTab('profile')" :class="{active: currentTab === 'profile'}">
+                    <i class="fas fa-user"></i> <span>Profile</span>
+                </li>
+                <li @click="changeTab('settings')" :class="{active: currentTab === 'settings'}">
+                    <i class="fas fa-cog"></i> <span>Settings</span>
+                </li>
+                <li @click="changeTab('notifications')" :class="{active: currentTab === 'notifications'}">
+                    <i class="fas fa-bell"></i> <span>Notifications</span>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+                </li>
+            </ul>
+        </aside>
         <main>
             <transition name="fade" mode="out-in">
                 <div v-if="currentTab === 'dashboard'" key="dashboard">
@@ -46,7 +75,7 @@
                             <div class="widget">
                                 <i class="fas fa-dollar-sign"></i>
                                 <p>Pending Payments</p>
-                                <h3>${{ pendingPayments }}</h3>
+                                <h3>₹{{ pendingPayments }}</h3>
                             </div>
                             <div class="widget">
                                 <i class="fas fa-envelope"></i>
@@ -82,11 +111,23 @@
                 <div v-if="currentTab === 'campaigns'" key="campaigns">
                     <section class="campaigns">
                         <h2>Active Campaigns</h2>
-                        <div v-for="campaign in activeCampaignList" :key="campaign.id" class="campaign-item">
+                        <input type="text" v-model="campaignSearch" placeholder="Search Campaigns" @input="filterCampaigns">
+                        <div v-for="campaign in filteredCampaigns" :key="campaign.id" class="campaign-item">
                             <h3>{{ campaign.name }}</h3>
                             <p>Brand: {{ campaign.brand }}</p>
                             <p>Status: <span :class="getStatusClass(campaign.status)">{{ campaign.status }}</span></p>
                             <p>Deadline: {{ campaign.deadline }}</p>
+                        </div>
+                    </section>
+                    <section class="available-campaigns">
+                        <h2>Available Campaigns</h2>
+                        <input type="text" v-model="availableCampaignSearch" placeholder="Search Available Campaigns" @input="filterAvailableCampaigns">
+                        <div v-for="campaign in filteredAvailableCampaigns" :key="campaign.id" class="campaign-item">
+                            <h3>{{ campaign.name }}</h3>
+                            <p>Brand: {{ campaign.brand }}</p>
+                            <p>Budget: ₹{{ campaign.budget }}</p>
+                            <p>Deadline: {{ campaign.deadline }}</p>
+                            <button @click="applyCampaign(campaign.id)">Apply</button>
                         </div>
                     </section>
                 </div>
@@ -95,8 +136,9 @@
                 <div v-if="currentTab === 'messages'" key="messages">
                     <section class="messages">
                         <h2>Messages/Inbox</h2>
+                        <input type="text" v-model="messageSearch" placeholder="Search Messages" @input="filterMessages">
                         <ul>
-                            <li v-for="message in messages" :key="message.id">
+                            <li v-for="message in filteredMessages" :key="message.id">
                                 <i class="fas fa-envelope"></i> {{ message.content }}
                             </li>
                         </ul>
@@ -108,14 +150,14 @@
                     <section class="payments">
                         <h2>Payments</h2>
                         <div class="payment-summary">
-                            <p>Total Earnings: ${{ totalEarnings }}</p>
-                            <p>Pending Payments: ${{ pendingPayments }}</p>
+                            <p>Total Earnings: ₹{{ totalEarnings }}</p>
+                            <p>Pending Payments: ₹{{ pendingPayments }}</p>
                         </div>
                         <div class="payment-history">
                             <h3>Payment History</h3>
                             <ul>
                                 <li v-for="payment in paymentHistory" :key="payment.id">
-                                    Payment {{ payment.id }}: ${{ payment.amount }} ({{ payment.status }})
+                                    Payment {{ payment.id }}: ₹{{ payment.amount }} ({{ payment.status }})
                                 </li>
                             </ul>
                         </div>
@@ -127,13 +169,29 @@
                     <section class="profile-settings">
                         <h2>Profile Settings</h2>
                         <div class="profile-info">
-                            <img src="https://via.placeholder.com/150" alt="User Avatar" class="avatar">
+                            <img :src="profile.avatar" alt="User Avatar" class="avatar">
+                            <input type="file" @change="uploadAvatar">
                             <ul>
                                 <li>Edit Personal Information</li>
                                 <li>Change Password</li>
                                 <li>Manage Social Media Accounts</li>
                             </ul>
                         </div>
+                        <form @submit.prevent="updateProfile">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" v-model="profile.name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" v-model="profile.email">
+                            </div>
+                            <div class="form-group">
+                                <label for="bio">Bio</label>
+                                <textarea id="bio" v-model="profile.bio"></textarea>
+                            </div>
+                            <button type="submit">Update Profile</button>
+                        </form>
                     </section>
                 </div>
             </transition>
@@ -141,7 +199,36 @@
                 <div v-if="currentTab === 'settings'" key="settings">
                     <section class="settings">
                         <h2>Settings</h2>
-                        <p>Placeholder for settings</p>
+                        <div class="settings-item">
+                            <h3>Notification Preferences</h3>
+                            <label>
+                                <input type="checkbox" v-model="settings.notifications.email"> Email Notifications
+                            </label>
+                            <label>
+                                <input type="checkbox" v-model="settings.notifications.sms"> SMS Notifications
+                            </label>
+                        </div>
+                        <div class="settings-item">
+                            <h3>Privacy Settings</h3>
+                            <label>
+                                <input type="checkbox" v-model="settings.privacy.showProfile"> Show Profile to Brands
+                            </label>
+                            <label>
+                                <input type="checkbox" v-model="settings.privacy.showStats"> Show Statistics to Public
+                            </label>
+                        </div>
+                    </section>
+                </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+                <div v-if="currentTab === 'notifications'" key="notifications">
+                    <section class="notifications">
+                        <h2>Notifications</h2>
+                        <ul>
+                            <li v-for="notification in notifications" :key="notification.id">
+                                <i class="fas fa-bell"></i> {{ notification.content }}
+                            </li>
+                        </ul>
                     </section>
                 </div>
             </transition>
@@ -155,31 +242,86 @@
             el: '#app',
             data: {
                 currentTab: 'dashboard',
-                totalCampaigns: 12,
-                activeCampaigns: 3,
-                pendingPayments: 1500,
-                newMessages: 5,
+                totalCampaigns: 15,
+                activeCampaigns: 5,
+                pendingPayments: 2300,
+                newMessages: 8,
+                campaignSearch: '',
+                availableCampaignSearch: '',
+                messageSearch: '',
                 activeCampaignList: [
                     { id: 1, name: 'Campaign 1', brand: 'XYZ', status: 'Active', deadline: '30th June 2024' },
-                    { id: 2, name: 'Campaign 2', brand: 'ABC', status: 'Active', deadline: '15th July 2024' }
+                    { id: 2, name: 'Campaign 2', brand: 'ABC', status: 'Active', deadline: '15th July 2024' },
+                    { id: 3, name: 'Campaign 3', brand: 'DEF', status: 'Pending', deadline: '20th July 2024' },
+                    { id: 4, name: 'Campaign 4', brand: 'GHI', status: 'Completed', deadline: '25th June 2024' },
+                    { id: 5, name: 'Campaign 5', brand: 'JKL', status: 'Active', deadline: '5th August 2024' }
+                ],
+                availableCampaignList: [
+                    { id: 6, name: 'Campaign 6', brand: 'MNO', budget: 15000, deadline: '1st July 2024' },
+                    { id: 7, name: 'Campaign 7', brand: 'PQR', budget: 20000, deadline: '10th July 2024' },
+                    { id: 8, name: 'Campaign 8', brand: 'STU', budget: 12000, deadline: '20th July 2024' }
                 ],
                 messages: [
                     { id: 1, content: 'Message from Brand XYZ' },
-                    { id: 2, content: 'Message from Brand ABC' }
+                    { id: 2, content: 'Message from Brand ABC' },
+                    { id: 3, content: 'Message from Brand DEF' },
+                    { id: 4, content: 'Message from Brand GHI' }
                 ],
-                totalEarnings: 5000,
+                totalEarnings: 7500,
                 paymentHistory: [
                     { id: 1, amount: 500, status: 'Completed' },
-                    { id: 2, amount: 1000, status: 'Pending' }
+                    { id: 2, amount: 1000, status: 'Pending' },
+                    { id: 3, amount: 700, status: 'Completed' },
+                    { id: 4, amount: 1100, status: 'Completed' }
                 ],
                 recentActivities: [
                     { id: 1, content: 'New campaign launched by Brand XYZ' },
-                    { id: 2, content: 'Payment received from Brand ABC' }
+                    { id: 2, content: 'Payment received from Brand ABC' },
+                    { id: 3, content: 'Campaign 3 updated by Brand DEF' }
                 ],
                 topCampaigns: [
                     { id: 1, name: 'Campaign 1', brand: 'XYZ', status: 'Active', engagement: 75 },
-                    { id: 2, name: 'Campaign 2', brand: 'ABC', status: 'Active', engagement: 82 }
-                ]
+                    { id: 2, name: 'Campaign 2', brand: 'ABC', status: 'Active', engagement: 82 },
+                    { id: 3, name: 'Campaign 3', brand: 'DEF', status: 'Pending', engagement: 60 },
+                    { id: 4, name: 'Campaign 4', brand: 'GHI', status: 'Completed', engagement: 88 }
+                ],
+                profile: {
+                    name: 'John Doe',
+                    email: 'john.doe@example.com',
+                    bio: 'Influencer and Content Creator',
+                    avatar: 'https://via.placeholder.com/150'
+                },
+                notifications: [
+                    { id: 1, content: 'New follower on Instagram' },
+                    { id: 2, content: 'Brand ABC liked your post' }
+                ],
+                settings: {
+                    notifications: {
+                        email: true,
+                        sms: false
+                    },
+                    privacy: {
+                        showProfile: true,
+                        showStats: false
+                    }
+                }
+            },
+            computed: {
+                filteredCampaigns() {
+                    return this.activeCampaignList.filter(campaign =>
+                        campaign.name.toLowerCase().includes(this.campaignSearch.toLowerCase())
+                    );
+                },
+                filteredAvailableCampaigns() {
+                    return this.availableCampaignList.filter(campaign =>
+                        campaign.name.toLowerCase().includes(this.availableCampaignSearch.toLowerCase())
+                    );
+                },
+                filteredMessages() {
+                    return this.messages.filter(message =>
+                        message.content.toLowerCase().includes(this.messageSearch.toLowerCase())
+                    );
+                }
             },
             methods: {
                 changeTab(tab) {
@@ -240,7 +382,7 @@
                                         label: function(context) {
                                             let label = context.label || '';
                                             if (label) {
-                                                label += ': $';
+                                                label += ': ₹';
                                             }
                                             if (context.raw !== null) {
                                                 label += context.raw;
@@ -259,6 +401,16 @@
                         'pending-status': status === 'Pending',
                         'completed-status': status === 'Completed'
                     };
+                },
+                applyCampaign(campaignId) {
+                    alert(`Applied for campaign ID: ${campaignId}`);
+                },
+                uploadAvatar(event) {
+                    const file = event.target.files[0];
+                    this.profile.avatar = URL.createObjectURL(file);
+                },
+                updateProfile() {
+                    alert('Profile updated successfully!');
                 }
             },
             mounted() {
