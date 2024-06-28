@@ -3,420 +3,319 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Influencer-Brand Platform Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.css">
     <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
 </head>
 <body>
-    <div id="app">
-        <header>
-            <div class="logo">
-                <img src="https://via.placeholder.com/50" alt="Company Logo">
-                <h1>BrandInfluence</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#" @click="changeTab('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li><a href="#" @click="changeTab('campaigns')"><i class="fas fa-bullhorn"></i> Campaigns</a></li>
-                    <li><a href="#" @click="changeTab('messages')"><i class="fas fa-envelope"></i> Messages</a></li>
-                    <li><a href="#" @click="changeTab('payments')"><i class="fas fa-dollar-sign"></i> Payments</a></li>
-                    <li><a href="#" @click="changeTab('profile')"><i class="fas fa-user"></i> Profile</a></li>
-                    <li><a href="#" @click="changeTab('settings')"><i class="fas fa-cog"></i> Settings</a></li>
-                    <li><a href="#" @click="changeTab('notifications')"><i class="fas fa-bell"></i> Notifications</a></li>
-                    <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                </ul>
-            </nav>
-        </header>
-        <aside>
-            <ul>
-                <li @click="changeTab('dashboard')" :class="{active: currentTab === 'dashboard'}">
-                    <i class="fas fa-tachometer-alt"></i> <span>Dashboard</span>
-                </li>
-                <li @click="changeTab('campaigns')" :class="{active: currentTab === 'campaigns'}">
-                    <i class="fas fa-bullhorn"></i> <span>Campaigns</span>
-                </li>
-                <li @click="changeTab('messages')" :class="{active: currentTab === 'messages'}">
-                    <i class="fas fa-envelope"></i> <span>Messages</span>
-                </li>
-                <li @click="changeTab('payments')" :class="{active: currentTab === 'payments'}">
-                    <i class="fas fa-dollar-sign"></i> <span>Payments</span>
-                </li>
-                <li @click="changeTab('profile')" :class="{active: currentTab === 'profile'}">
-                    <i class="fas fa-user"></i> <span>Profile</span>
-                </li>
-                <li @click="changeTab('settings')" :class="{active: currentTab === 'settings'}">
-                    <i class="fas fa-cog"></i> <span>Settings</span>
-                </li>
-                <li @click="changeTab('notifications')" :class="{active: currentTab === 'notifications'}">
-                    <i class="fas fa-bell"></i> <span>Notifications</span>
-                </li>
-                <li>
-                    <a href="#"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
-                </li>
-            </ul>
-        </aside>
-        <main>
-            <transition name="fade" mode="out-in">
-                <div v-if="currentTab === 'dashboard'" key="dashboard">
-                    <section class="summary">
-                        <h2>Dashboard Summary</h2>
-                        <div class="summary-item">
-                            <div class="widget">
-                                <i class="fas fa-chart-line"></i>
-                                <p>Total Campaigns</p>
-                                <h3>{{ totalCampaigns }}</h3>
-                            </div>
-                            <div class="widget">
-                                <i class="fas fa-bullhorn"></i>
-                                <p>Active Campaigns</p>
-                                <h3>{{ activeCampaigns }}</h3>
-                            </div>
-                            <div class="widget">
-                                <i class="fas fa-dollar-sign"></i>
-                                <p>Pending Payments</p>
-                                <h3>₹{{ pendingPayments }}</h3>
-                            </div>
-                            <div class="widget">
-                                <i class="fas fa-envelope"></i>
-                                <p>New Messages</p>
-                                <h3>{{ newMessages }}</h3>
-                            </div>
-                        </div>
-                        <div class="charts">
-                            <canvas id="campaignChart"></canvas>
-                            <canvas id="earningsChart"></canvas>
-                        </div>
-                    </section>
-                    <section class="recent-activities">
-                        <h2>Recent Activities</h2>
-                        <ul>
-                            <li v-for="activity in recentActivities" :key="activity.id">
-                                <i class="fas fa-bell"></i> {{ activity.content }}
-                            </li>
-                        </ul>
-                    </section>
-                    <section class="top-campaigns">
-                        <h2>Top Performing Campaigns</h2>
-                        <div v-for="campaign in topCampaigns" :key="campaign.id" class="campaign-item">
-                            <h3>{{ campaign.name }}</h3>
-                            <p>Brand: {{ campaign.brand }}</p>
-                            <p>Status: <span :class="getStatusClass(campaign.status)">{{ campaign.status }}</span></p>
-                            <p>Engagement: {{ campaign.engagement }}%</p>
-                        </div>
-                    </section>
-                </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-                <div v-if="currentTab === 'campaigns'" key="campaigns">
-                    <section class="campaigns">
-                        <h2>Active Campaigns</h2>
-                        <input type="text" v-model="campaignSearch" placeholder="Search Campaigns" @input="filterCampaigns">
-                        <div v-for="campaign in filteredCampaigns" :key="campaign.id" class="campaign-item">
-                            <h3>{{ campaign.name }}</h3>
-                            <p>Brand: {{ campaign.brand }}</p>
-                            <p>Status: <span :class="getStatusClass(campaign.status)">{{ campaign.status }}</span></p>
-                            <p>Deadline: {{ campaign.deadline }}</p>
-                        </div>
-                    </section>
-                    <section class="available-campaigns">
-                        <h2>Available Campaigns</h2>
-                        <input type="text" v-model="availableCampaignSearch" placeholder="Search Available Campaigns" @input="filterAvailableCampaigns">
-                        <div v-for="campaign in filteredAvailableCampaigns" :key="campaign.id" class="campaign-item">
-                            <h3>{{ campaign.name }}</h3>
-                            <p>Brand: {{ campaign.brand }}</p>
-                            <p>Budget: ₹{{ campaign.budget }}</p>
-                            <p>Deadline: {{ campaign.deadline }}</p>
-                            <button @click="applyCampaign(campaign.id)">Apply</button>
-                        </div>
-                    </section>
-                </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-                <div v-if="currentTab === 'messages'" key="messages">
-                    <section class="messages">
-                        <h2>Messages/Inbox</h2>
-                        <input type="text" v-model="messageSearch" placeholder="Search Messages" @input="filterMessages">
-                        <ul>
-                            <li v-for="message in filteredMessages" :key="message.id">
-                                <i class="fas fa-envelope"></i> {{ message.content }}
-                            </li>
-                        </ul>
-                    </section>
-                </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-                <div v-if="currentTab === 'payments'" key="payments">
-                    <section class="payments">
-                        <h2>Payments</h2>
-                        <div class="payment-summary">
-                            <p>Total Earnings: ₹{{ totalEarnings }}</p>
-                            <p>Pending Payments: ₹{{ pendingPayments }}</p>
-                        </div>
-                        <div class="payment-history">
-                            <h3>Payment History</h3>
-                            <ul>
-                                <li v-for="payment in paymentHistory" :key="payment.id">
-                                    Payment {{ payment.id }}: ₹{{ payment.amount }} ({{ payment.status }})
-                                </li>
-                            </ul>
-                        </div>
-                    </section>
-                </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-                <div v-if="currentTab === 'profile'" key="profile">
-                    <section class="profile-settings">
-                        <h2>Profile Settings</h2>
-                        <div class="profile-info">
-                            <img :src="profile.avatar" alt="User Avatar" class="avatar">
-                            <input type="file" @change="uploadAvatar">
-                            <ul>
-                                <li>Edit Personal Information</li>
-                                <li>Change Password</li>
-                                <li>Manage Social Media Accounts</li>
-                            </ul>
-                        </div>
-                        <form @submit.prevent="updateProfile">
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" id="name" v-model="profile.name">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" v-model="profile.email">
-                            </div>
-                            <div class="form-group">
-                                <label for="bio">Bio</label>
-                                <textarea id="bio" v-model="profile.bio"></textarea>
-                            </div>
-                            <button type="submit">Update Profile</button>
-                        </form>
-                    </section>
-                </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-                <div v-if="currentTab === 'settings'" key="settings">
-                    <section class="settings">
-                        <h2>Settings</h2>
-                        <div class="settings-item">
-                            <h3>Notification Preferences</h3>
-                            <label>
-                                <input type="checkbox" v-model="settings.notifications.email"> Email Notifications
-                            </label>
-                            <label>
-                                <input type="checkbox" v-model="settings.notifications.sms"> SMS Notifications
-                            </label>
-                        </div>
-                        <div class="settings-item">
-                            <h3>Privacy Settings</h3>
-                            <label>
-                                <input type="checkbox" v-model="settings.privacy.showProfile"> Show Profile to Brands
-                            </label>
-                            <label>
-                                <input type="checkbox" v-model="settings.privacy.showStats"> Show Statistics to Public
-                            </label>
-                        </div>
-                    </section>
-                </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-                <div v-if="currentTab === 'notifications'" key="notifications">
-                    <section class="notifications">
-                        <h2>Notifications</h2>
-                        <ul>
-                            <li v-for="notification in notifications" :key="notification.id">
-                                <i class="fas fa-bell"></i> {{ notification.content }}
-                            </li>
-                        </ul>
-                    </section>
-                </div>
-            </transition>
+    <header >
+        <h1 id="vision">Join Our Influencer Network</h1>
+    </header>
+ 
+        <section id="features">
+          <h1 class="header_title" id="vision">Powered by Technology</h1>
+        </section>
+        <main class="card_grid">
+          <section class="card cyan">
+            <h2 class="card_title">Supervisor</h2>
+            <p class="card_content">Monitors activity to identify project roadblocks</p>
+            <img class="card_img" src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Four%20card%20feature%20section/images/icon-supervisor.svg" alt="Supervisor">
+          </section>
+      
+          <section class="card red">
+            <h2 class="card_title">Team Builder</h2>
+            <p class="card_content">Scans our talent network to create the optimal team for your project</p>
+            <img class="card_img" src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Four%20card%20feature%20section/images/icon-team-builder.svg" alt="page-home">
+          </section>
+      
+          <section class="card blue">
+            <h2 class="card_title">Karma</h2>
+            <p class="card-content">Regularly evaluates our talent to ensure quality</p>
+            <img class="card_img" src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Four%20card%20feature%20section/images/icon-karma.svg" alt="Karma">
+          </section>
+      
+          <section class="card orange">
+            <h2 class="card_title">Calculator</h2>
+            <p class="card_content">Uses data from past projects to provide better delivery estimates</p>
+            <img class="card_img" src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Four%20card%20feature%20section/images/icon-calculator.svg" alt="Calculator">
+          </section>
         </main>
+      </div>
+     
+     <!------BRANDS COLAB-->
+         <!-- slider 1 -->
+          <section class="collab">
+         <h1 id="vision" class="collabhead" >Brands We've Collaborated With</h1>
+    <div
+    class="slider"
+    style="--width: 150px; --height: 50px; --imageQuantity: 10"
+  >
+    <div class="list">
+      <div class="item">
+        <img
+          src="https://images.unsplash.com/photo-1509043759401-136742328bb3?ixlib=rb-4.0.3"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_2.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_3.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_4.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_5.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_6.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_7.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_8.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_9.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_10.png"
+          alt=""
+        />
+      </div>
+      <!-- Duplicate items for seamless looping -->
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_1.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_2.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_3.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_4.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_5.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_6.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_7.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_8.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_9.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_10.png"
+          alt=""
+        />
+      </div>
     </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        new Vue({
-            el: '#app',
-            data: {
-                currentTab: 'dashboard',
-                totalCampaigns: 15,
-                activeCampaigns: 5,
-                pendingPayments: 2300,
-                newMessages: 8,
-                campaignSearch: '',
-                availableCampaignSearch: '',
-                messageSearch: '',
-                activeCampaignList: [
-                    { id: 1, name: 'Campaign 1', brand: 'XYZ', status: 'Active', deadline: '30th June 2024' },
-                    { id: 2, name: 'Campaign 2', brand: 'ABC', status: 'Active', deadline: '15th July 2024' },
-                    { id: 3, name: 'Campaign 3', brand: 'DEF', status: 'Pending', deadline: '20th July 2024' },
-                    { id: 4, name: 'Campaign 4', brand: 'GHI', status: 'Completed', deadline: '25th June 2024' },
-                    { id: 5, name: 'Campaign 5', brand: 'JKL', status: 'Active', deadline: '5th August 2024' }
-                ],
-                availableCampaignList: [
-                    { id: 6, name: 'Campaign 6', brand: 'MNO', budget: 15000, deadline: '1st July 2024' },
-                    { id: 7, name: 'Campaign 7', brand: 'PQR', budget: 20000, deadline: '10th July 2024' },
-                    { id: 8, name: 'Campaign 8', brand: 'STU', budget: 12000, deadline: '20th July 2024' }
-                ],
-                messages: [
-                    { id: 1, content: 'Message from Brand XYZ' },
-                    { id: 2, content: 'Message from Brand ABC' },
-                    { id: 3, content: 'Message from Brand DEF' },
-                    { id: 4, content: 'Message from Brand GHI' }
-                ],
-                totalEarnings: 7500,
-                paymentHistory: [
-                    { id: 1, amount: 500, status: 'Completed' },
-                    { id: 2, amount: 1000, status: 'Pending' },
-                    { id: 3, amount: 700, status: 'Completed' },
-                    { id: 4, amount: 1100, status: 'Completed' }
-                ],
-                recentActivities: [
-                    { id: 1, content: 'New campaign launched by Brand XYZ' },
-                    { id: 2, content: 'Payment received from Brand ABC' },
-                    { id: 3, content: 'Campaign 3 updated by Brand DEF' }
-                ],
-                topCampaigns: [
-                    { id: 1, name: 'Campaign 1', brand: 'XYZ', status: 'Active', engagement: 75 },
-                    { id: 2, name: 'Campaign 2', brand: 'ABC', status: 'Active', engagement: 82 },
-                    { id: 3, name: 'Campaign 3', brand: 'DEF', status: 'Pending', engagement: 60 },
-                    { id: 4, name: 'Campaign 4', brand: 'GHI', status: 'Completed', engagement: 88 }
-                ],
-                profile: {
-                    name: 'John Doe',
-                    email: 'john.doe@example.com',
-                    bio: 'Influencer and Content Creator',
-                    avatar: 'https://via.placeholder.com/150'
-                },
-                notifications: [
-                    { id: 1, content: 'New follower on Instagram' },
-                    { id: 2, content: 'Brand ABC liked your post' }
-                ],
-                settings: {
-                    notifications: {
-                        email: true,
-                        sms: false
-                    },
-                    privacy: {
-                        showProfile: true,
-                        showStats: false
-                    }
-                }
-            },
-            computed: {
-                filteredCampaigns() {
-                    return this.activeCampaignList.filter(campaign =>
-                        campaign.name.toLowerCase().includes(this.campaignSearch.toLowerCase())
-                    );
-                },
-                filteredAvailableCampaigns() {
-                    return this.availableCampaignList.filter(campaign =>
-                        campaign.name.toLowerCase().includes(this.availableCampaignSearch.toLowerCase())
-                    );
-                },
-                filteredMessages() {
-                    return this.messages.filter(message =>
-                        message.content.toLowerCase().includes(this.messageSearch.toLowerCase())
-                    );
-                }
-            },
-            methods: {
-                changeTab(tab) {
-                    this.currentTab = tab;
-                    this.$nextTick(() => {
-                        if (tab === 'dashboard') {
-                            this.renderCharts();
-                        }
-                    });
-                },
-                renderCharts() {
-                    const ctx1 = document.getElementById('campaignChart').getContext('2d');
-                    new Chart(ctx1, {
-                        type: 'doughnut',
-                        data: {
-                            labels: ['Total Campaigns', 'Active Campaigns'],
-                            datasets: [{
-                                data: [this.totalCampaigns, this.activeCampaigns],
-                                backgroundColor: ['#36A2EB', '#FF6384']
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(context) {
-                                            let label = context.label || '';
-                                            if (label) {
-                                                label += ': ';
-                                            }
-                                            if (context.raw !== null) {
-                                                label += context.raw;
-                                            }
-                                            return label;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-
-                    const ctx2 = document.getElementById('earningsChart').getContext('2d');
-                    new Chart(ctx2, {
-                        type: 'bar',
-                        data: {
-                            labels: ['Total Earnings', 'Pending Payments'],
-                            datasets: [{
-                                data: [this.totalEarnings, this.pendingPayments],
-                                backgroundColor: ['#4BC0C0', '#FFCE56']
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(context) {
-                                            let label = context.label || '';
-                                            if (label) {
-                                                label += ': ₹';
-                                            }
-                                            if (context.raw !== null) {
-                                                label += context.raw;
-                                            }
-                                            return label;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-                },
-                getStatusClass(status) {
-                    return {
-                        'active-status': status === 'Active',
-                        'pending-status': status === 'Pending',
-                        'completed-status': status === 'Completed'
-                    };
-                },
-                applyCampaign(campaignId) {
-                    alert(`Applied for campaign ID: ${campaignId}`);
-                },
-                uploadAvatar(event) {
-                    const file = event.target.files[0];
-                    this.profile.avatar = URL.createObjectURL(file);
-                },
-                updateProfile() {
-                    alert('Profile updated successfully!');
-                }
-            },
-            mounted() {
-                this.renderCharts();
-            }
-        });
-    </script>
+  <!-- slider 2 -->
+  <div
+    class="slider"
+    reverse="true"
+    style="--width: 200px; --height: 200px; --imageQuantity: 7"
+  >
+    <div class="list">
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_1.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_2.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_3.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_4.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_5.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_6.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_7.png"
+          alt=""
+        />
+      </div>
+      <!-- Duplicate items for seamless looping -->
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_1.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_2.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_3.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_4.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_5.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_6.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_7.png"
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+</section>
+<!--------------------------------------testimonials--------------------->
+<div class="content-wrapper">
+    <h1 id="vision">Our Reviews</h1>
+   
+    <div class="wrapper-for-arrows">
+      
+        <div id="reviewWrap" class="review-wrap">
+            <div id="imgDiv" class="">
+            </div>
+            <div id="personName"></div>
+            <div id="profession"></div>
+            <div id="description">
+            </div>
+        </div>
+      
+        <div class="left-arrow-wrap arrow-wrap">
+            <div class="arrow" id="leftArrow"></div>
+        </div>
+        <div class="right-arrow-wrap arrow-wrap">
+            <div class="arrow" id="rightArrow"></div>
+        </div>
+    </div>
+</div>
+<!------footer-->
+<footer class="footer-section">
+                <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+                    <div class="footer-widget">
+                        <div id="vision" class="footer-widget-heading">
+                            <h3>Useful Links</h3>
+                        </div>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">about</a></li>
+                            <li><a href="#">services</a></li>
+                            <li><a href="#">portfolio</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Our Services</a></li>
+                            <li><a href="#">Expert Team</a></li>
+                            <li><a href="#">Contact us</a></li>
+                            <li><a href="#">Latest News</a></li>
+                        </ul>
+                    </div>
+                </div>
+              
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

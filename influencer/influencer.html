@@ -3,116 +3,319 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Influencers Page</title>
     <link rel="stylesheet" href="influencer.css">
+    <title>Document</title>
 </head>
 <body>
-
-<header>
-    <h1>Join Our Influencer Network</h1>
-</header>
-
-<main>
-    <section id="features"> 
-        <h2 style="border: 2px solid black;border-radius: 20px;padding: 20px 40px;display: inline-block; background-color: grey ;color: white;">What We Provide</h2>
-         
-        <div class="feature">
-            <div class="feature-content">
-                <h3>Feature 1 Title</h3>
-                <p>Description of feature 1.</p>
-            </div>
-            <img src="placeholder1.jpg" alt="Feature 1">
-        </div>
-        <div class="feature">
-            <div class="feature-content">
-                <h3>Feature 2 Title</h3>
-                <p>Description of feature 2.</p>
-            </div>
-            <img src="placeholder2.jpg" alt="Feature 2">
-        </div>
-        <!-- Repeat for other features -->
-    </section>
-
-    <section id="collaborations">
-        <h2 style="border: 2px solid black;border-radius: 20px;padding: 20px 40px;display: inline-block; background-color: grey ;color: white;">Brands We've Collaborated With</h2>
-        <div class="brand-scroll-container">
-            <div class="brand">
-                <img src="brand1.jpg" alt="Brand 1">
-                <div class="brand-info">
-                    <h3 style="margin-top: 100px; text-align: center;">Brand 1</h3>
-                    <p>Description of Brand 1 goes here.</p>
-                </div>
-            </div>
-            <div class="brand">
-                <img src="brand2.jpg" alt="Brand 2">
-                <div class="brand-info">
-                    <h3 style="margin-top: 100px; text-align: center;">Brand 2</h3>
-                    <p>Description of Brand 2 goes here.</p>
-                </div>
-            </div>
-            <!-- Repeat for other brands -->
-        </div>
-    </section>
-
-    <section id="steps">
-        <h2 style="border: 2px solid black;border-radius: 20px;padding: 20px 40px;display: inline-block; background-color: grey ;color: white;">Steps to Join Us</h2>
-        <div class="step">
-            <div class="step-content">
-                <div class="step-info">
-                    <h3>Step 1: Lorem ipsum dolor sit amet</h3>
-                    <p>Description of Step 1 goes here.</p>
-                </div>
-                <img src="step1-icon.png" alt="Step 1 Icon">
-            </div>
-        </div>
-        <div class="step">
-            <div class="step-content">
-                <div class="step-info">
-                    <h3>Step 2: Consectetur adipiscing elit</h3>
-                    <p>Description of Step 2 goes here.</p>
-                </div>
-                <img src="step2-icon.png" alt="Step 2 Icon">
-            </div>
-        </div>
-        <div class="step">
-            <div class="step-content">
-                <div class="step-info">
-                    <h3>Step 3: Sed do eiusmod tempor incididunt</h3>
-                    <p>Description of Step 3 goes here.</p>
-                </div>
-                <img src="step3-icon.png" alt="Step 3 Icon">
-            </div>
-        </div>
-        <div class="step">
-            <div class="step-content">
-                <div class="step-info">
-                    <h3>Step 4: Ut labore et dolore magna aliqua</h3>
-                    <p>Description of Step 4 goes here.</p>
-                </div>
-                <img src="step4-icon.png" alt="Step 4 Icon">
-            </div>
-        </div>
-    </section>
-</main>
-
-<section id="testimonials">
-    <h2 style="border: 2px solid black;border-radius: 20px;padding: 20px 40px;display: inline-block; background-color: grey ;color: white;">Testimonials</h2>
-    <div class="testimonial">
-        <img src="testimonial1.jpg" alt="Testimonial 1">
-        <blockquote>"Testimonial quote goes here."</blockquote>
-        <cite>- Testimonial Person, Company</cite>
+    <header >
+        <h1 id="vision">Join Our Influencer Network</h1>
+    </header>
+ 
+        <section id="features">
+          <h1 class="header_title" id="vision">Powered by Technology</h1>
+        </section>
+        <main class="card_grid">
+          <section class="card cyan">
+            <h2 class="card_title">Supervisor</h2>
+            <p class="card_content">Monitors activity to identify project roadblocks</p>
+            <img class="card_img" src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Four%20card%20feature%20section/images/icon-supervisor.svg" alt="Supervisor">
+          </section>
+      
+          <section class="card red">
+            <h2 class="card_title">Team Builder</h2>
+            <p class="card_content">Scans our talent network to create the optimal team for your project</p>
+            <img class="card_img" src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Four%20card%20feature%20section/images/icon-team-builder.svg" alt="page-home">
+          </section>
+      
+          <section class="card blue">
+            <h2 class="card_title">Karma</h2>
+            <p class="card-content">Regularly evaluates our talent to ensure quality</p>
+            <img class="card_img" src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Four%20card%20feature%20section/images/icon-karma.svg" alt="Karma">
+          </section>
+      
+          <section class="card orange">
+            <h2 class="card_title">Calculator</h2>
+            <p class="card_content">Uses data from past projects to provide better delivery estimates</p>
+            <img class="card_img" src="https://raw.githubusercontent.com/davidsonaguiar/frontendmentor/main/Four%20card%20feature%20section/images/icon-calculator.svg" alt="Calculator">
+          </section>
+        </main>
+      </div>
+     
+     <!------BRANDS COLAB-->
+         <!-- slider 1 -->
+          <section class="collab">
+         <h1 id="vision" class="collabhead" >Brands We've Collaborated With</h1>
+    <div
+    class="slider"
+    style="--width: 150px; --height: 50px; --imageQuantity: 10"
+  >
+    <div class="list">
+      <div class="item">
+        <img
+          src="https://images.unsplash.com/photo-1509043759401-136742328bb3?ixlib=rb-4.0.3"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_2.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_3.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_4.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_5.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_6.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_7.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_8.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_9.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_10.png"
+          alt=""
+        />
+      </div>
+      <!-- Duplicate items for seamless looping -->
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_1.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_2.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_3.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_4.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_5.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_6.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_7.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_8.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_9.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider1_10.png"
+          alt=""
+        />
+      </div>
     </div>
-    <div class="testimonial">
-        <img src="testimonial2.jpg" alt="Testimonial 2">
-        <blockquote>"Another testimonial quote."</blockquote>
-        <cite>- Another Testimonial Person, Company</cite>
+  </div>
+
+  <!-- slider 2 -->
+  <div
+    class="slider"
+    reverse="true"
+    style="--width: 200px; --height: 200px; --imageQuantity: 7"
+  >
+    <div class="list">
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_1.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_2.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_3.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_4.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_5.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_6.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_7.png"
+          alt=""
+        />
+      </div>
+      <!-- Duplicate items for seamless looping -->
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_1.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_2.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_3.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_4.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_5.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_6.png"
+          alt=""
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://raw.githubusercontent.com/HoanghoDev/youtube_v2/main/auto_slider/images/slider2_7.png"
+          alt=""
+        />
+      </div>
     </div>
-    <!-- Repeat for other testimonials -->
+  </div>
 </section>
-
-<footer>
-    <p>&copy; 2024 Your Company. All rights reserved.</p>
+<!--------------------------------------testimonials--------------------->
+<div class="content-wrapper">
+    <h1 id="vision">Our Reviews</h1>
+   
+    <div class="wrapper-for-arrows">
+      
+        <div id="reviewWrap" class="review-wrap">
+            <div id="imgDiv" class="">
+            </div>
+            <div id="personName"></div>
+            <div id="profession"></div>
+            <div id="description">
+            </div>
+        </div>
+      
+        <div class="left-arrow-wrap arrow-wrap">
+            <div class="arrow" id="leftArrow"></div>
+        </div>
+        <div class="right-arrow-wrap arrow-wrap">
+            <div class="arrow" id="rightArrow"></div>
+        </div>
+    </div>
+</div>
+<!------footer-->
+<footer class="footer-section">
+                <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+                    <div class="footer-widget">
+                        <div id="vision" class="footer-widget-heading">
+                            <h3>Useful Links</h3>
+                        </div>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">about</a></li>
+                            <li><a href="#">services</a></li>
+                            <li><a href="#">portfolio</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Our Services</a></li>
+                            <li><a href="#">Expert Team</a></li>
+                            <li><a href="#">Contact us</a></li>
+                            <li><a href="#">Latest News</a></li>
+                        </ul>
+                    </div>
+                </div>
+              
 </footer>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<script src="influencer.js"></script>
 </body>
 </html>
