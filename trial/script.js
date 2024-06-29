@@ -1,128 +1,196 @@
-const reviewWrap = document.getElementById("reviewWrap");
-const leftArrow = document.getElementById("leftArrow");
-const rightArrow = document.getElementById("rightArrow");
-const imgDiv = document.getElementById("imgDiv");
-const personName = document.getElementById("personName");
-const profession = document.getElementById("profession");
-const description = document.getElementById("description");
-
-
-const chicken = document.querySelector(".chicken");
-
-let isChickenVisible = false;
-
-let people = [
-  {
-    photo: 'url("https://cdn.pixabay.com/photo/2018/03/06/22/57/portrait-3204843_960_720.jpg")',
-    name: "Susan Smith",
-    profession: "WEB DEVELOPER",
-    description: "Cheese and biscuits chalk and cheese fromage frais. Cheeseburger caerphilly cheese slices chalk and cheese cheeseburger mascarpone danish fontina rubber cheese. Squirty cheese say cheese manchego jarlsberg lancashire taleggio cheese and wine squirty cheese. Babybel pecorino feta macaroni cheese brie queso everyone loves gouda. Cheese and biscuits camembert de normandie fromage fromage macaroni cheese"
+new Vue({
+  el: '#app',
+  data: {
+      currentTab: 'dashboard',
+      totalCampaigns: 15,
+      activeCampaigns: 5,
+      pendingPayments: 2300,
+      newMessages: 8,
+      campaignSearch: '',
+      availableCampaignSearch: '',
+      messageSearch: '',
+      activeCampaignList: [
+          { id: 1, name: 'Campaign 1', brand: 'XYZ', status: '800', deadline: '30th June 2024' },
+          { id: 2, name: 'Campaign 2', brand: 'ABC', status: '750', deadline: '15th July 2024' },
+          { id: 3, name: 'Campaign 3', brand: 'DEF', status: '87452', deadline: '20th July 2024' },
+          { id: 4, name: 'Campaign 4', brand: 'GHI', status: '8794', deadline: '25th June 2024' },
+          { id: 5, name: 'Campaign 5', brand: 'JKL', status: '887451', deadline: '5th August 2024' }
+      ],
+      availableCampaignList: [
+          { id: 6, name: 'Campaign 6', brand: 'MNO', budget: 45000, deadline: '1st July 2024' },
+          { id: 7, name: 'Campaign 7', brand: 'PQR', budget: 20000, deadline: '10th July 2024' },
+          { id: 8, name: 'Campaign 8', brand: 'STU', budget: 12000, deadline: '20th July 2024' }
+      ],
+      messages: [
+          { id: 1, content: 'Message from Brand XYZ' },
+          { id: 2, content: 'Message from Brand ABC' },
+          { id: 3, content: 'Message from Brand DEF' },
+          { id: 4, content: 'Message from Brand GHI' }
+      ],
+      totalEarnings: 7500,
+      paymentHistory: [
+          { id: 1, amount: 500, status: 'Completed' },
+          { id: 2, amount: 1000, status: 'Pending' },
+          { id: 3, amount: 700, status: 'Completed' },
+          { id: 4, amount: 1100, status: 'Completed' }
+      ],
+      recentActivities: [
+          { id: 1, content: 'New campaign launched by Brand XYZ' },
+          { id: 2, content: 'Payment received from Brand ABC' },
+          { id: 3, content: 'Campaign 3 updated by Brand DEF' }
+      ],
+      topCampaigns: [
+          { id: 1, name: 'Campaign 1', brand: 'XYZ', status: '8785', engagement: 75 },
+          { id: 2, name: 'Campaign 2', brand: 'ABC', status: '84855', engagement: 82 },
+          { id: 3, name: 'Campaign 3', brand: 'DEF', status: '5822', engagement: 60 },
+          { id: 4, name: 'Campaign 4', brand: 'GHI', status: '854752', engagement: 88 }
+      ],
+      profile: {
+          name: 'John Doe',
+          email: 'john.doe@example.com',
+          bio: 'Influencer and Content Creator',
+          avatar: 'https://via.placeholder.com/150'
+      },
+      notifications: [
+          { id: 1, content: 'New follower on Instagram' },
+          { id: 2, content: 'Brand ABC liked your post' }
+      ],
+      unreadNotifications: 2,
+      settings: {
+          notifications: {
+              email: true,
+              sms: false
+          },
+          privacy: {
+              showProfile: true,
+              showStats: false
+          }
+      },
+      darkMode: false
   },
-  {
-    photo: "url('https://cdn.pixabay.com/photo/2019/02/11/20/20/woman-3990680_960_720.jpg')",
-    name: "Anna Grey",
-    profession: "UFC FIGHTER",
-    description: "I'm baby migas cornhole hell of etsy tofu, pickled af cardigan pabst. Man braid deep v pour-over, blue bottle art party thundercats vape. Yr waistcoat whatever yuccie, farm-to-table next level PBR&B. Banh mi pinterest palo santo, aesthetic chambray leggings activated charcoal cred hammock kitsch humblebrag typewriter neutra knausgaard. Pabst succulents lo-fi microdosing portland gastropub Banh mi pinterest palo santo"
+  computed: {
+      filteredCampaigns() {
+          return this.activeCampaignList.filter(campaign =>
+              campaign.name.toLowerCase().includes(this.campaignSearch.toLowerCase())
+          );
+      },
+      filteredAvailableCampaigns() {
+          return this.availableCampaignList.filter(campaign =>
+              campaign.name.toLowerCase().includes(this.availableCampaignSearch.toLowerCase())
+          );
+      },
+      filteredMessages() {
+          return this.messages.filter(message =>
+              message.content.toLowerCase().includes(this.messageSearch.toLowerCase())
+          );
+      }
   },
-  {
-    photo: "url('https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_960_720.jpg')",
-    name: "Branson Cook",
-    profession: "ACTOR",
-    description: "Radio telescope something incredible is waiting to be known billions upon billions Jean-François Champollion hearts of the stars tingling of the spine. Encyclopaedia galactica not a sunrise but a galaxyrise concept of the number one encyclopaedia galactica from which we spring bits of moving fluff. Vastness is bearable only through love paroxysm of global death concept"
+  methods: {
+      changeTab(tab) {
+          this.currentTab = tab;
+          this.$nextTick(() => {
+              if (tab === 'dashboard') {
+                  this.renderCharts();
+              }
+          });
+      },
+      renderCharts() {
+          const ctx1 = document.getElementById('campaignChart').getContext('2d');
+          new Chart(ctx1, {
+              type: 'doughnut',
+              data: {
+                  labels: ['Total Campaigns', 'Active Campaigns'],
+                  datasets: [{
+                      data: [this.totalCampaigns, this.activeCampaigns],
+                      backgroundColor: ['#36A2EB', '#FF6384']
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  plugins: {
+                      tooltip: {
+                          callbacks: {
+                              label: function(context) {
+                                  let label = context.label || '';
+                                  if (label) {
+                                      label += ': ';
+                                  }
+                                  if (context.raw !== null) {
+                                      label += context.raw;
+                                  }
+                                  return label;
+                              }
+                          }
+                      }
+                  }
+              }
+          });
+
+          const ctx2 = document.getElementById('earningsChart').getContext('2d');
+          new Chart(ctx2, {
+              type: 'bar',
+              data: {
+                  labels: ['Total Earnings', 'Pending Payments'],
+                  datasets: [{
+                      data: [this.totalEarnings, this.pendingPayments],
+                      backgroundColor: ['#4BC0C0', '#FFCE56']
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  plugins: {
+                      tooltip: {
+                          callbacks: {
+                              label: function(context) {
+                                  let label = context.label || '';
+                                  if (label) {
+                                      label += ': ₹';
+                                  }
+                                  
+                                    if (context.raw !== null) {
+                                      label += context.raw;
+                                  }
+                                  return label;
+                              }
+                          }
+                      }
+                  }
+              }
+          });
+      },
+      getStatusClass(status) {
+          return {
+              'active-status': status === 'Active',
+              'pending-status': status === 'Pending',
+              'completed-status': status === 'Completed'
+          };
+      },
+      applyCampaign(campaignId) {
+          alert(`Applied for campaign ID: ${campaignId}`);
+      },
+      changePassword() {
+          alert('Redirecting to change password page...');
+      },
+      manageSocialMedia() {
+          alert('Redirecting to manage social media accounts page...');
+      },
+      requestPayout() {
+          alert('Payout request has been sent!');
+      },
+      toggleDarkMode() {
+          this.darkMode = !this.darkMode;
+      },
+      filterCampaigns() {
+          // Filtering logic is already handled in computed properties
+      },
+      filterAvailableCampaigns() {
+          // Filtering logic is already handled in computed properties
+      },
+      filterMessages() {
+          // Filtering logic is already handled in computed properties
+      }
   },
-  {
-    photo: "url('https://cdn.pixabay.com/photo/2014/10/30/17/32/boy-509488_960_720.jpg')",
-    name: "Julius Grohn",
-    profession: "PROFESSIONAL CHILD",
-    description: "Biscuit chocolate pastry topping lollipop pie. Sugar plum brownie halvah dessert tiramisu tiramisu gummi bears icing cookie. Gummies gummi bears pie apple pie sugar plum jujubes. Oat cake croissant bear claw tootsie roll caramels. Powder ice cream caramels candy tiramisu shortbread macaroon chocolate bar. Sugar plum jelly-o chocolate dragée tart chocolate marzipan cupcake gingerbread."
+  mounted() {
+      this.renderCharts();
   }
-];
-
-imgDiv.style.backgroundImage = people[0].photo;
-personName.innerText = people[0].name;
-profession.innerText = people[0].profession;
-description.innerText = people[0].description;
-let currentPerson = 0;
-
-// Select the side where you want to slide
-function slide(whichSide, personNumber) {
-  let reviewWrapWidth = reviewWrap.offsetWidth + "px";
-  let descriptionHeight = description.offsetHeight + "px";
-  // (+ or -)
-  let side1symbol = whichSide === "left" ? "" : "-";
-  let side2symbol = whichSide === "left" ? "-" : "";
-
-  let tl = gsap.timeline();
-
-  tl.to(reviewWrap, {
-    duration: 0.4,
-    opacity: 0,
-    translateX: ${side1symbol + reviewWrapWidth}
-  });
-
-  tl.to(reviewWrap, {
-    duration: 0,
-    translateX: ${side2symbol + reviewWrapWidth}
-  });
-
-  setTimeout(() => {
-    imgDiv.style.backgroundImage = people[personNumber].photo;
-    description.style.height = descriptionHeight;
-    personName.innerText = people[personNumber].name;
-    profession.innerText = people[personNumber].profession;
-    description.innerText = people[personNumber].description;
-  }, 400);
-
-  tl.to(reviewWrap, {
-    duration: 0.4,
-    opacity: 1,
-    translateX: 0
-  });
-
-  if (isChickenVisible) {
-    tl.to(chicken, {
-      duration: 0.4,
-      opacity: 1
-    });
-  }
-}
-
-function setNextCardLeft() {
-  if (currentPerson === 3) {
-    currentPerson = 0;
-  } else {
-    currentPerson++;
-  }
-  slide("left", currentPerson);
-}
-
-function setNextCardRight() {
-  if (currentPerson === 0) {
-    currentPerson = 3;
-  } else {
-    currentPerson--;
-  }
-  slide("right", currentPerson);
-}
-
-leftArrow.addEventListener("click", setNextCardLeft);
-rightArrow.addEventListener("click", setNextCardRight);
-
- 
-
-
-const items = document.querySelectorAll(".accordion button");
-
-function toggleAccordion() {
-  const itemToggle = this.getAttribute('aria-expanded');
-  
-  for (i = 0; i < items.length; i++) {
-    items[i].setAttribute('aria-expanded', 'false');
-  }
-  
-  if (itemToggle == 'false') {
-    this.setAttribute('aria-expanded', 'true');
-  }
-}
-
-items.forEach(item => item.addEventListener('click', toggleAccordion));
+});

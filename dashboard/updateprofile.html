@@ -1,158 +1,379 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Information Form</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #07252d;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-        .container {
-            max-width: 600px;
-            width: 90%;
-            padding: 20px;
-            background-color: rgba(248, 252, 252, 0.942);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow-y: auto;
-            max-height: 90vh;
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333333;
-        }
-        .form-group {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            margin-right: 10px;
-            color: #555555;
-        }
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #cccccc;
-            border-radius: 4px;
-        }
-        .form-group textarea {
-            resize: vertical;
-        }
-        .form-group input[type="submit"] {
-            grid-column: 1 / span 2;
-            background-color: #007bff;
-            color: #ffffff;
-            border: none;
-            cursor: pointer;
-            padding: 10px 20px;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-        .form-group input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-        .form-group .error {
-            color: red;
-            display: none;
-            grid-column: 1 / span 2;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Update your Profile</h2>
-        <form id="personalInfoForm">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="contact">Contact:</label>
-                <input type="tel" id="contact" name="contact" required pattern="\d{10}" title="Please enter a valid 10-digit phone number">
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="city">City:</label>
-                <input type="text" id="city" name="city" required>
-            </div>
-            <div class="form-group">
-                <label for="state">State:</label>
-                <input type="text" id="state" name="state" required>
-            </div>
-            <div class="form-group">
-                <label for="pincode">Pincode:</label>
-                <input type="text" id="pincode" name="pincode" required pattern="\d{6}" title="Please enter a valid 6-digit pincode">
-            </div>
-            <div class="form-group">
-                <label for="instaId">Instagram ID:</label>
-                <input type="text" id="instaId" name="instaId">
-            </div>
-            <div class="form-group">
-                <label for="otherPlatformsId">Other Platforms ID: (if any)</label>
-                <input type="text" id="otherPlatformsId" name="otherPlatformsId">
-            </div>
-            <div class="form-group">
-                <label for="about">About:</label>
-                <textarea id="about" name="about" rows="3" required></textarea>
-            </div>
-           
-            <div class="form-group">
-                <span class="error" id="platformError">Please fill at least one of Instagram ID or Other Platforms ID.</span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Submit">
-            </div>
-        </form>
-    </div>
+/* Reset and basic styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    <script>
-        document.getElementById('personalInfoForm').addEventListener('submit', function(event) {
-            const instaId = document.getElementById('instaId').value.trim();
-            const otherPlatformsId = document.getElementById('otherPlatformsId').value.trim();
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  background-color: #f8f9fa;
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
+}
 
-            if (!instaId && !otherPlatformsId) {
-                event.preventDefault();
-                document.getElementById('platformError').style.display = 'block';
-            } else {
-                document.getElementById('platformError').style.display = 'none';
-            }
-        });
+body.dark-mode {
+  background-color: #07252d;
+  color: #f8f9fa;
+}
 
-        document.getElementById('contact').addEventListener('input', function() {
-            this.value = this.value.replace(/[^0-9]/g, '');
-        });
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #07252d;
+  color: #fff;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px #07252d;
+  transition: background-color 0.3s;
+}
 
-        document.getElementById('pincode').addEventListener('input', function() {
-            this.value = this.value.replace(/[^0-9]/g, '');
-        });
+header .logo {
+  display: flex;
+  align-items: center;
+}
 
-        const inputs = document.querySelectorAll('input, textarea');
-        inputs.forEach(input => {
-            input.addEventListener('focus', () => {
-                input.style.backgroundColor = '#e0f7fa';
-            });
-            input.addEventListener('blur', () => {
-                input.style.backgroundColor = '';
-            });
-        });
-    </script>
-</body>
-</html>
+header .logo img {
+  margin-right: 10px;
+}
+
+header .logo h1 {
+  font-size: 1.5rem;
+}
+
+header nav ul {
+  list-style-type: none;
+  display: flex;
+}
+
+header nav ul li {
+  margin: 0 10px;
+}
+
+header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 10px;
+  transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  align-items: center;
+}
+
+header nav ul li a:hover {
+  background-color: #07252d;
+  color: #ffc107;
+}
+
+aside {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 200px;
+  background-color: #07252d;
+  padding-top: 60px;
+  box-shadow: 2px 0 5px #07252d;
+  transition: background-color 0.3s;
+}
+
+aside ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+aside ul li {
+  padding: 15px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+aside ul li.active,
+aside ul li:hover {
+  background-color: #07252d;
+}
+
+aside ul li i {
+  margin-right: 10px;
+}
+
+main {
+  margin-left: 220px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px #07252d;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+main.dark-mode {
+  background-color: #07252d;
+}
+
+h2 {
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+  color: #07252d;
+  font-size: 1.5rem;
+}
+
+.summary-item {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  justify-content: space-around;
+}
+
+.widget {
+  flex: 1;
+  background-color: #f1f3f5;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 6px #07252d;
+}
+
+.widget:hover {
+  background-color: #e9ecef;
+}
+
+.widget i {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #07252d;
+}
+
+.widget h3 {
+  font-size: 1.5rem;
+  color: #07252d;
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.campaign-item {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f1f3f5;
+  border-left: 5px solid #07252d;
+  transition: background-color 0.3s, border-color 0.3s;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px #07252d;
+}
+
+.campaign-item:hover {
+  background-color: #e9ecef;
+  border-color: #07252d;
+}
+
+.campaign-item button {
+  padding: 10px 20px;
+  background-color: #07252d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.campaign-item button:hover {
+  background-color: #07252d;
+}
+
+.recent-activities ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.recent-activities ul li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+}
+
+.recent-activities ul li i {
+  margin-right: 10px;
+  color: #07252d;
+}
+
+.messages ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.messages ul li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+}
+
+.messages ul li i {
+  margin-right: 10px;
+  color: #07252d;
+}
+
+.payments .payment-history ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.profile-settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-settings .profile-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-settings .avatar {
+  border-radius: 50%;
+  margin-right: 20px;
+  width: 150px;
+  height: 150px;
+  border: 4px solid #07252d;
+}
+
+.profile-settings .profile-info ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-settings .profile-info ul li {
+  margin: 10px 0;
+  color: #07252d;
+  font-weight: bold;
+}
+
+.profile-settings .form-group {
+  margin-bottom: 15px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.profile-settings .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #07252d;
+}
+
+.profile-settings .form-group input,
+.profile-settings .form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.profile-settings button {
+  padding: 10px 20px;
+  background-color: #07252d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.profile-settings button:hover {
+  background-color: #07252d;
+}
+
+.settings .settings-item {
+  margin-bottom: 20px;
+}
+
+.settings .settings-item h3 {
+  margin-bottom: 10px;
+  color: #07252d;
+}
+
+.settings .settings-item label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.settings .settings-item input {
+  margin-right: 10px;
+}
+
+.notifications ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.notifications ul li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+}
+
+.notifications ul li i {
+  margin-right: 10px;
+  color: #07252d;
+}
+
+.active-status {
+  color: #28a745;
+}
+
+.pending-status {
+  color: #ffc107;
+}
+
+.completed-status {
+  color: #17a2b8;
+}
+
+.badge {
+  background-color: #fffb07;
+  color: #07252d;
+  border-radius: 12px;
+  padding: 2px 8px;
+  margin-left: 5px;
+  font-size: 0.8rem;
+}
+
+/* Animations */
+.slide-fade-enter-active, .slide-fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-fade-enter, .slide-fade-leave-to /* .slide-fade-leave-active in <2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
+.button {
+  display: inline-block;
+  margin-top: 35px;
+  padding: 12px 20px;
+  background-color: #d03;
+  color: white;
+  text-decoration: none;
+  border-radius: 15px;
+  font-size: 1.2em;
+  transition: 0.3s, transform 0.3s;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.button:hover {
+  background-color: #d03;
+  transform: translateY(-3px);
+}

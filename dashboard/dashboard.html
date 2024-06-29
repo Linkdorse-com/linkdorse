@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.css">
     <link rel="stylesheet" href="dashboard.css">
 </head>
-<body>
+<body :class="{ 'dark-mode': darkMode }">
     <div id="app">
         <header>
             <div class="logo">
@@ -23,8 +23,9 @@
                     <li><a href="#" @click="changeTab('payments')"><i class="fas fa-dollar-sign"></i> Payments</a></li>
                     <li><a href="#" @click="changeTab('profile')"><i class="fas fa-user"></i> Profile</a></li>
                     <li><a href="#" @click="changeTab('settings')"><i class="fas fa-cog"></i> Settings</a></li>
-                    <li><a href="#" @click="changeTab('notifications')"><i class="fas fa-bell"></i> Notifications</a></li>
+                    <li><a href="#" @click="changeTab('notifications')"><i class="fas fa-bell"></i> Notifications <span v-if="unreadNotifications > 0" class="badge">{{ unreadNotifications }}</span></a></li>
                     <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    <li><a href="#" @click="toggleDarkMode"><i class="fas fa-adjust"></i></a></li>
                 </ul>
             </nav>
         </header>
@@ -57,7 +58,7 @@
             </ul>
         </aside>
         <main>
-            <transition name="fade" mode="out-in">
+            <transition name="slide-fade" mode="out-in">
                 <div v-if="currentTab === 'dashboard'" key="dashboard">
                     <section class="summary">
                         <h2>Dashboard Summary</h2>
@@ -97,17 +98,17 @@
                         </ul>
                     </section>
                     <section class="top-campaigns">
-                        <h2>Top Performing Campaigns</h2>
+                        <h2>Top Performing Brands</h2>
                         <div v-for="campaign in topCampaigns" :key="campaign.id" class="campaign-item">
                             <h3>{{ campaign.name }}</h3>
                             <p>Brand: {{ campaign.brand }}</p>
-                            <p>Status: <span :class="getStatusClass(campaign.status)">{{ campaign.status }}</span></p>
+                            <p>Earnings: <span :class="getStatusClass(campaign.status)"> Rs. {{ campaign.status }}</span></p>
                             <p>Engagement: {{ campaign.engagement }}%</p>
                         </div>
                     </section>
                 </div>
             </transition>
-            <transition name="fade" mode="out-in">
+            <transition name="slide-fade" mode="out-in">
                 <div v-if="currentTab === 'campaigns'" key="campaigns">
                     <section class="campaigns">
                         <h2>Active Campaigns</h2>
@@ -115,7 +116,7 @@
                         <div v-for="campaign in filteredCampaigns" :key="campaign.id" class="campaign-item">
                             <h3>{{ campaign.name }}</h3>
                             <p>Brand: {{ campaign.brand }}</p>
-                            <p>Status: <span :class="getStatusClass(campaign.status)">{{ campaign.status }}</span></p>
+                            <p>Earnings: <span :class="getStatusClass(campaign.status)"> ₹{{ campaign.status }}</span></p>
                             <p>Deadline: {{ campaign.deadline }}</p>
                         </div>
                     </section>
@@ -132,7 +133,7 @@
                     </section>
                 </div>
             </transition>
-            <transition name="fade" mode="out-in">
+            <transition name="slide-fade" mode="out-in">
                 <div v-if="currentTab === 'messages'" key="messages">
                     <section class="messages">
                         <h2>Messages/Inbox</h2>
@@ -145,7 +146,7 @@
                     </section>
                 </div>
             </transition>
-            <transition name="fade" mode="out-in">
+            <transition name="slide-fade" mode="out-in">
                 <div v-if="currentTab === 'payments'" key="payments">
                     <section class="payments">
                         <h2>Payments</h2>
@@ -153,11 +154,9 @@
                             <p>Total Earnings: ₹{{ totalEarnings }}</p>
                             <p>Pending Payments: ₹{{ pendingPayments }}</p>
                         </div>
-
                         <div>
-                            <button class="button">Request Payout</button>
+                            <button class="button" @click="requestPayout">Request Payout</button>
                         </div>
-
                         <br>
                         <div class="payment-history">
                             <h3>Payment History</h3>
@@ -167,43 +166,36 @@
                                 </li>
                             </ul>
                         </div>
-
-                        
                     </section>
                 </div>
             </transition>
-            <transition name="fade" mode="out-in">
+            <transition name="slide-fade" mode="out-in">
                 <div v-if="currentTab === 'profile'" key="profile">
                     <section class="profile-settings">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" v-model="profile.name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" v-model="profile.email">
+                        </div>
+                        <div class="form-group">
+                            <label for="bio">Bio</label>
+                            <textarea id="bio" v-model="profile.bio"></textarea>
+                        </div>
                         <h2>Profile Settings</h2>
                         <div class="profile-info">
-                            <img :src="profile.avatar" alt="User Avatar" class="avatar">
-                            <input type="file" @change="uploadAvatar">
-                            <ul><a href="dashboard\updateprofile.html">
-                                <li>Edit Personal Information</li></a>
-                                <li>Change Password</li>
-                                <li>Manage Social Media Accounts</li>
+                            <ul>
+                                <li><a href="dashboard/updateprofile.html">Edit Personal Information</a></li>
+                                <li><a href="#" @click="changePassword">Change Password</a></li>
+                                <li><a href="#" @click="manageSocialMedia">Manage Social Media Accounts</a></li>
                             </ul>
                         </div>
-                        <!-- <form @submit.prevent="updateProfile"> -->
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" id="name" v-model="profile.name">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" v-model="profile.email">
-                            </div>
-                            <div class="form-group">
-                                <label for="bio">Bio</label>
-                                <textarea id="bio" v-model="profile.bio"></textarea>
-                            </div>
-                            <!-- <button type="submit">Update Profile</button>
-                        </form> -->
                     </section>
                 </div>
             </transition>
-            <transition name="fade" mode="out-in">
+            <transition name="slide-fade" mode="out-in">
                 <div v-if="currentTab === 'settings'" key="settings">
                     <section class="settings">
                         <h2>Settings</h2>
@@ -228,7 +220,7 @@
                     </section>
                 </div>
             </transition>
-            <transition name="fade" mode="out-in">
+            <transition name="slide-fade" mode="out-in">
                 <div v-if="currentTab === 'notifications'" key="notifications">
                     <section class="notifications">
                         <h2>Notifications</h2>
@@ -245,186 +237,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        new Vue({
-            el: '#app',
-            data: {
-                currentTab: 'dashboard',
-                totalCampaigns: 15,
-                activeCampaigns: 5,
-                pendingPayments: 2300,
-                newMessages: 8,
-                campaignSearch: '',
-                availableCampaignSearch: '',
-                messageSearch: '',
-                activeCampaignList: [
-                    { id: 1, name: 'Campaign 1', brand: 'XYZ', status: 'Active', deadline: '30th June 2024' },
-                    { id: 2, name: 'Campaign 2', brand: 'ABC', status: 'Active', deadline: '15th July 2024' },
-                    { id: 3, name: 'Campaign 3', brand: 'DEF', status: 'Pending', deadline: '20th July 2024' },
-                    { id: 4, name: 'Campaign 4', brand: 'GHI', status: 'Completed', deadline: '25th June 2024' },
-                    { id: 5, name: 'Campaign 5', brand: 'JKL', status: 'Active', deadline: '5th August 2024' }
-                ],
-                availableCampaignList: [
-                    { id: 6, name: 'Campaign 6', brand: 'MNO', budget: 15000, deadline: '1st July 2024' },
-                    { id: 7, name: 'Campaign 7', brand: 'PQR', budget: 20000, deadline: '10th July 2024' },
-                    { id: 8, name: 'Campaign 8', brand: 'STU', budget: 12000, deadline: '20th July 2024' }
-                ],
-                messages: [
-                    { id: 1, content: 'Message from Brand XYZ' },
-                    { id: 2, content: 'Message from Brand ABC' },
-                    { id: 3, content: 'Message from Brand DEF' },
-                    { id: 4, content: 'Message from Brand GHI' }
-                ],
-                totalEarnings: 7500,
-                paymentHistory: [
-                    { id: 1, amount: 500, status: 'Completed' },
-                    { id: 2, amount: 1000, status: 'Pending' },
-                    { id: 3, amount: 700, status: 'Completed' },
-                    { id: 4, amount: 1100, status: 'Completed' }
-                ],
-                recentActivities: [
-                    { id: 1, content: 'New campaign launched by Brand XYZ' },
-                    { id: 2, content: 'Payment received from Brand ABC' },
-                    { id: 3, content: 'Campaign 3 updated by Brand DEF' }
-                ],
-                topCampaigns: [
-                    { id: 1, name: 'Campaign 1', brand: 'XYZ', status: 'Active', engagement: 75 },
-                    { id: 2, name: 'Campaign 2', brand: 'ABC', status: 'Active', engagement: 82 },
-                    { id: 3, name: 'Campaign 3', brand: 'DEF', status: 'Pending', engagement: 60 },
-                    { id: 4, name: 'Campaign 4', brand: 'GHI', status: 'Completed', engagement: 88 }
-                ],
-                profile: {
-                    name: 'John Doe',
-                    email: 'john.doe@example.com',
-                    bio: 'Influencer and Content Creator',
-                    avatar: 'https://via.placeholder.com/150'
-                },
-                notifications: [
-                    { id: 1, content: 'New follower on Instagram' },
-                    { id: 2, content: 'Brand ABC liked your post' }
-                ],
-                settings: {
-                    notifications: {
-                        email: true,
-                        sms: false
-                    },
-                    privacy: {
-                        showProfile: true,
-                        showStats: false
-                    }
-                }
-            },
-            computed: {
-                filteredCampaigns() {
-                    return this.activeCampaignList.filter(campaign =>
-                        campaign.name.toLowerCase().includes(this.campaignSearch.toLowerCase())
-                    );
-                },
-                filteredAvailableCampaigns() {
-                    return this.availableCampaignList.filter(campaign =>
-                        campaign.name.toLowerCase().includes(this.availableCampaignSearch.toLowerCase())
-                    );
-                },
-                filteredMessages() {
-                    return this.messages.filter(message =>
-                        message.content.toLowerCase().includes(this.messageSearch.toLowerCase())
-                    );
-                }
-            },
-            methods: {
-                changeTab(tab) {
-                    this.currentTab = tab;
-                    this.$nextTick(() => {
-                        if (tab === 'dashboard') {
-                            this.renderCharts();
-                        }
-                    });
-                },
-                renderCharts() {
-                    const ctx1 = document.getElementById('campaignChart').getContext('2d');
-                    new Chart(ctx1, {
-                        type: 'doughnut',
-                        data: {
-                            labels: ['Total Campaigns', 'Active Campaigns'],
-                            datasets: [{
-                                data: [this.totalCampaigns, this.activeCampaigns],
-                                backgroundColor: ['#36A2EB', '#FF6384']
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(context) {
-                                            let label = context.label || '';
-                                            if (label) {
-                                                label += ': ';
-                                            }
-                                            if (context.raw !== null) {
-                                                label += context.raw;
-                                            }
-                                            return label;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-
-                    const ctx2 = document.getElementById('earningsChart').getContext('2d');
-                    new Chart(ctx2, {
-                        type: 'bar',
-                        data: {
-                            labels: ['Total Earnings', 'Pending Payments'],
-                            datasets: [{
-                                data: [this.totalEarnings, this.pendingPayments],
-                                backgroundColor: ['#4BC0C0', '#FFCE56']
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(context) {
-                                            let label = context.label || '';
-                                            if (label) {
-                                                label += ': ₹';
-                                            }
-                                            if (context.raw !== null) {
-                                                label += context.raw;
-                                            }
-                                            return label;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-                },
-                getStatusClass(status) {
-                    return {
-                        'active-status': status === 'Active',
-                        'pending-status': status === 'Pending',
-                        'completed-status': status === 'Completed'
-                    };
-                },
-                applyCampaign(campaignId) {
-                    alert(`Applied for campaign ID: ${campaignId}`);
-                },
-                uploadAvatar(event) {
-                    const file = event.target.files[0];
-                    this.profile.avatar = URL.createObjectURL(file);
-                },
-                updateProfile() {
-                    alert('Profile updated successfully!');
-                }
-            },
-            mounted() {
-                this.renderCharts();
-            }
-        });
-    </script>
+    <script src="dashboard.js"></script>
 </body>
 </html>

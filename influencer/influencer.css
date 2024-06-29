@@ -524,7 +524,7 @@ footer p {
 footer h2 {
   font-size: 2em;
   color: white;
-  margin-bottom : 0.5em;
+  margin-bottom:0.5em;
 }
 
 footer p {
@@ -563,7 +563,7 @@ footer .social-media a:hover {
   --shadow2: 0 2px 6px #00000044, 0 4px 7px #00000022;
 }
 main{
-  margin: 20px;
+  margin: 60px;
 }
  
 
@@ -571,8 +571,11 @@ main{
 ul.infoGraphic {
   
   font-size: var(--font-size);
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto;
+  gap: 40px;
+ 
   justify-content: center;
   li {
     position: relative;
@@ -590,6 +593,8 @@ ul.infoGraphic {
     .numberWrap {
       position: absolute;
     }
+ 
+ 
     .number {
       font-family: "maven pro", sans-serif;
       font-size: 13em;
@@ -672,6 +677,9 @@ ul.infoGraphic li:hover .coverWrap .numberCover {
 }
 
 
+ul.infoGraphic :nth-child(5) {
+margin-left: 50%;
+}
 
 .icon {
   position: absolute;
