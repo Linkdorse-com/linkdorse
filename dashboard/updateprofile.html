@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Information Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #07252d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 600px;
+            width: 90%;
+            padding: 20px;
+            background-color: rgba(248, 252, 252, 0.942);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333333;
+        }
+        .form-group {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            margin-right: 10px;
+            color: #555555;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+        .form-group textarea {
+            resize: vertical;
+        }
+        .form-group input[type="submit"] {
+            grid-column: 1 / span 2;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .form-group .error {
+            color: red;
+            display: none;
+            grid-column: 1 / span 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Update your Profile</h2>
+        <form id="personalInfoForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="contact">Contact:</label>
+                <input type="tel" id="contact" name="contact" required pattern="\d{10}" title="Please enter a valid 10-digit phone number">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required>
+            </div>
+            <div class="form-group">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" required>
+            </div>
+            <div class="form-group">
+                <label for="pincode">Pincode:</label>
+                <input type="text" id="pincode" name="pincode" required pattern="\d{6}" title="Please enter a valid 6-digit pincode">
+            </div>
+            <div class="form-group">
+                <label for="instaId">Instagram ID:</label>
+                <input type="text" id="instaId" name="instaId">
+            </div>
+            <div class="form-group">
+                <label for="otherPlatformsId">Other Platforms ID: (if any)</label>
+                <input type="text" id="otherPlatformsId" name="otherPlatformsId">
+            </div>
+            <div class="form-group">
+                <label for="about">About:</label>
+                <textarea id="about" name="about" rows="3" required></textarea>
+            </div>
+           
+            <div class="form-group">
+                <span class="error" id="platformError">Please fill at least one of Instagram ID or Other Platforms ID.</span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('personalInfoForm').addEventListener('submit', function(event) {
+            const instaId = document.getElementById('instaId').value.trim();
+            const otherPlatformsId = document.getElementById('otherPlatformsId').value.trim();
+
+            if (!instaId && !otherPlatformsId) {
+                event.preventDefault();
+                document.getElementById('platformError').style.display = 'block';
+            } else {
+                document.getElementById('platformError').style.display = 'none';
+            }
+        });
+
+        document.getElementById('contact').addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        document.getElementById('pincode').addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        const inputs = document.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.style.backgroundColor = '#e0f7fa';
+            });
+            input.addEventListener('blur', () => {
+                input.style.backgroundColor = '';
+            });
+        });
+    </script>
+</body>
+</html>

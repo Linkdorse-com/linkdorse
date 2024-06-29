@@ -153,6 +153,12 @@
                             <p>Total Earnings: ₹{{ totalEarnings }}</p>
                             <p>Pending Payments: ₹{{ pendingPayments }}</p>
                         </div>
+
+                        <div>
+                            <button class="button">Request Payout</button>
+                        </div>
+
+                        <br>
                         <div class="payment-history">
                             <h3>Payment History</h3>
                             <ul>
@@ -161,6 +167,8 @@
                                 </li>
                             </ul>
                         </div>
+
+                        
                     </section>
                 </div>
             </transition>
@@ -171,13 +179,13 @@
                         <div class="profile-info">
                             <img :src="profile.avatar" alt="User Avatar" class="avatar">
                             <input type="file" @change="uploadAvatar">
-                            <ul>
-                                <li>Edit Personal Information</li>
+                            <ul><a href="dashboard\updateprofile.html">
+                                <li>Edit Personal Information</li></a>
                                 <li>Change Password</li>
                                 <li>Manage Social Media Accounts</li>
                             </ul>
                         </div>
-                        <form @submit.prevent="updateProfile">
+                        <!-- <form @submit.prevent="updateProfile"> -->
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" id="name" v-model="profile.name">
@@ -190,8 +198,8 @@
                                 <label for="bio">Bio</label>
                                 <textarea id="bio" v-model="profile.bio"></textarea>
                             </div>
-                            <button type="submit">Update Profile</button>
-                        </form>
+                            <!-- <button type="submit">Update Profile</button>
+                        </form> -->
                     </section>
                 </div>
             </transition>

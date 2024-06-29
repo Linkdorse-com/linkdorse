@@ -5,6 +5,19 @@
   box-sizing: border-box;
 }
 
+.button{
+  display: inline-block;
+    margin-top: 35px;
+    padding: 12px 20px;
+    background-color: #f04;
+    color: white;
+    text-decoration: none;
+    border-radius: 15px;
+    font-size: 1.2em;
+    transition: 0.3s, transform 0.3s;
+    animation: fadeInUp 1s ease-in-out;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   line-height: 1.6;
