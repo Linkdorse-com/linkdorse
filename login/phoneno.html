@@ -39,7 +39,7 @@
         }
 
         #phone{
-            font-size: larger;
+            font-size: 1rem;
             margin-top: 40px;
         }
         .brand-name {
@@ -50,11 +50,13 @@
             letter-spacing: 1px;
             margin-bottom: 20px;
         }
-
+h1{
+    font-size: 1.5rem;
+}
         h2 {
             margin-bottom: 20px;
             color: #333;
-            font-size: 22px;
+            font-size: 12px;
         }
 
         input[type="tel"] {
@@ -95,7 +97,7 @@
 
         .info-text {
             color: #666;
-            font-size: 20px;
+            font-size:1rem;
             margin-top: 10px;
         }
 
@@ -111,6 +113,23 @@
             }
             h2 {
                 font-size: 20px;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px;
+            }
+            .brand-logo {
+                width: 60px;
+            }
+            .brand-name {
+                font-size: 20px;
+            }
+            h1 {
+                font-size: 1.2rem;
+            }
+            h2 {
+                font-size: 18px;
             }
         }
     </style>

@@ -8,7 +8,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
+ 
     background-color: #f9f9f9;
 }
 #about {
@@ -16,7 +16,7 @@ body {
     font-size: 5em;
     letter-spacing: 15px;
     color: #0e3742;
-    margin-top: -1%;
+  
     text-transform: uppercase;
     width: 100%;
     -webkit-box-reflect: below 1px linear-gradient(transparent, #0008);
@@ -36,10 +36,11 @@ body {
 
 .aboutit{
   margin-top: 10%;
+  padding: 10px;
 }
 
-p.aboutit {
-    font-size: x-large;
+p .aboutit {
+    font-size:1rem;
     color: #fff;
     text-align: center;
     
@@ -61,7 +62,9 @@ p.aboutit {
     text-align: center;
     overflow: hidden;
 }
-
+.container p{
+    font-size: 2rem;
+}
 
 .section p {
     font-size: 1.2em;
@@ -153,19 +156,20 @@ p.aboutit {
     header {
         background-color: #07252d;
         color: #fff;
+        height: 400px;
         text-align: center;
-        padding: 200px 10px;
+       
     }
 
     /* Vision Section Styles */
    
     #visionp{
         margin-top: 3%; 
-        font-size: xx-large;
-        font-weight: bolder;   
+        font-size: 1.5rem;
+          
     }
     #visionlist{
-        font-size: xx-large;
+        font-size: 1.3rem;
     }
     #vision {
         position: relative;
@@ -262,7 +266,9 @@ p.aboutit {
     text-align: center;
     margin: 20px;
 }
-
+#back{
+    padding: 10px 20px; border: none; cursor: pointer;height: 70px;width: 90px;display: flex;
+}
 .team-section .team-member img {
     width: 150px;
     height: 150px;
@@ -375,3 +381,82 @@ footer {
     }
 }
 
+@media (max-width: 768px) {
+    .team-section .team-member {
+        flex: 1 1 calc(50% - 10px);
+    }
+}
+
+@media (max-width: 576px) {
+    .team-section .team-member {
+        flex: 1 1 100%;
+    }
+    #about{
+        font-size: 4rem;
+
+    }
+#vision{
+    letter-spacing: 1px;
+}
+    .section {
+        padding: 20px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    #about {
+        font-size: 4em;
+        letter-spacing: 2px;
+    }
+.container{
+    font-size: 0.6rem;
+}
+.container p{
+    font-size: 1rem;
+}
+#back{
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+   left: 50%;
+   
+  }
+    .section h2 {
+        
+        font-size: 0.5rem;
+    }
+
+    .section-content {
+        padding: 5px;
+    }
+    .section-image img {
+        max-width: 200px;
+        max-height: 200px;
+    }
+
+    .team-member img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .team-member p {
+        font-size: 0.9rem;
+    }
+    #vision{
+        font-size: 1.8rem;
+    }
+  
+    #visionp{
+        margin-top: 15%;
+        font-size: 1rem;
+        word-spacing: 0.7%;
+    }
+    #visionlist{
+        font-size: 1rem;
+    }
+    .social-links img {
+        width: 25px;
+        height: 25px;
+    }
+}

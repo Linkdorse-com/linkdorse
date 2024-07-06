@@ -12,7 +12,7 @@ body {
   width: 100vh;
 background-color: #07252d;
   padding: 20px;
-}
+}slider
 
 /* Collaborations Section */
 section#collaborations {
@@ -787,4 +787,115 @@ width: calc(250px * 14);
 .slide {
 height: 100px;
 width: 250px;
+}
+@media (max-width: 768px) {
+  .container {
+    padding: 10px; 
+  }
+
+  .logo-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+    gap: 20px;
+  }
+
+  .btn1 {
+    width: 30%; 
+    font-size: 0.9rem; 
+  }
+
+  header h1 {
+    font-size: 1.8rem; 
+  }
+
+  .form {
+    grid-template-columns: 1fr; 
+    max-width: 100%; 
+    padding: 1rem; 
+  }
+
+  .input {
+    font-size: 0.9rem; 
+  }
+
+  .section-title {
+    font-size: 1.5rem; 
+  }
+
+  .btn {
+    width: 100%; 
+  }
+}
+
+@media (max-width: 576px) {
+  .team-section .team-member {
+      flex: 1 1 100%;
+  }
+  #about{
+      font-size: 4rem;
+
+  }
+#vision{
+  letter-spacing: 1px;
+  font-size: 1.8rem;
+
+  
+}
+#vision2{
+  letter-spacing: 1px;
+  font-size: 1.7rem;
+
+  
+}
+#vision1{
+  letter-spacing: 1px;
+  font-size: 3rem;
+
+  
+}
+.slider{
+  width:  270px;
+}
+.container1{
+  width: 390px;
+}
+  .section {
+      padding: 20px 0;
+  }
+}
+@media (max-width: 850px) {
+  .form {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form:before {
+    top: -13px;
+    left: initial;
+    right: 70px;
+  }
+
+  .circle.one {
+    top: -80px;
+    right: -120px;
+  }
+
+  .circle.two {
+    top: 150px;
+    right: -110px;
+  }
+.accordion
+ {
+  width: 134%;
+  margin-left: -32%;
+ 
+ } section#collaborations {
+    padding: 20px;
+  }
+
+  .logo-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+
+  #get-started a {
+    width: 60%;
+  }
 }

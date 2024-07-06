@@ -5,14 +5,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Sales</title>
     <link rel="stylesheet" href="contactsales.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+        .container {
+            max-width: 600px;
+            width: 90%;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 2rem;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-size: 1.2rem;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: #ffffff;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                justify-content: flex-start;
+                height: auto;
+                padding: 20px;
+            }
+            .container {
+                width: 100%;
+                margin-top: 60px;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            label {
+                font-size: 1rem;
+            }
+            input, textarea {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+            button {
+                font-size: 0.9rem;
+                padding: 8px 16px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <img onclick="goBack()" class="back-button" src="back.png" alt="Back">
+
     <div class="container" id="mainbox">
-        <h1>Contact Sales</h1>
-        <p style="font-size: x-large;">For inquiries or to get started with us, <b> please contact us via email or fill out the form below to request a callback. </b></p>
+        <h1 id="vision">Contact Sales</h1>
+        <p style="font-size: large;">For inquiries or to get started with us, <b>please contact us via email or fill out the form below to request a callback.</b></p>
 
         <div class="contact-info">
-            <p style="font-size: x-large ;">Email: <a href="mailto:sales@example.com">sales@example.com</a></p>
+            <p style="font-size: large;">Email: <a href="mailto:sales@example.com">sales@example.com</a></p>
         </div>
 
         <h2>Request a Callback</h2>
@@ -21,13 +124,13 @@
             <input type="text" id="name" name="entry.1234567890" required>
             
             <label for="phone">Your Phone Number or mail id</label>
-            <input type="tel" id="phone" name="entry.0987654321" required>
+            <input type="text" id="phone" name="entry.0987654321" required>
 
-            <label for="website">Your website url   </label>
-            <textarea id="message" name="entry.2468013579" rows="1"></textarea>
+            <label for="website">Your website url</label>
+            <input type="text" id="website" name="entry.2468013579">
             
             <label for="message">Additional Information (optional)</label>
-            <textarea id="message" name="entry.2468013579" rows="4"></textarea>
+            <textarea id="message" name="entry.1357913579" rows="4"></textarea>
             
             <button type="submit">Request Callback</button>
         </form>

@@ -4,40 +4,47 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    
+    height: 120vh; /* Adjusted to full viewport height */
     margin: 0;
-    background-color: #0e3742;
 }
 
-#mainbox{
-    background-color: white;
+#mainbox {
+    background-color: #07252d;
+    width: 80%;
+    max-width: 600px;
+    padding: 40px;
+    margin-top: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(7, 37, 45, 0.3); /* Adjusted shadow for softer look */
+    text-align: center;
 }
 
 .container {
     background-color: #ffffff;
-    padding: 40px;
+    padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 0 20px #07252d;
-    width: 80%;
+    box-shadow: 0 0 20px rgba(7, 37, 45, 0.3); /* Adjusted shadow for softer look */
+    width: 100%;
     max-width: 600px;
     text-align: center;
+    
 }
 
 h1, h2 {
-    color: #333333;
+    top: 4%;
+    color: red;
 }
 
 p {
-    color: #555555;
+    color: white;
     line-height: 1.6;
-}
-
-.contact-info {
-    margin-bottom: 20px;
+    font-size: 18px; /* Increased font size for readability */
 }
 
 .contact-info p {
     font-size: 18px;
+    margin-bottom: 10px; /* Added margin bottom for spacing */
 }
 
 form {
@@ -48,8 +55,12 @@ form {
 
 label {
     margin-bottom: 10px;
-    color: #555555;
-    font-size: 20px;
+    color:white;
+    font-size: 18px;
+    display: block;
+    text-align: left;
+    width: 100%;
+    max-width: 400px;
 }
 
 input, textarea {
@@ -58,10 +69,10 @@ input, textarea {
     border: 1px solid #dddddd;
     border-radius: 6px;
     font-size: 16px;
-    width: 100%;
+    width: calc(100% - 24px);
     max-width: 400px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    background-color: #f9f9f9;
+    background-color: #0b5e75;
 }
 
 input:focus, textarea:focus {
@@ -91,4 +102,34 @@ button:hover {
 
 button:focus {
     outline: none;
+}
+
+@media (max-width: 768px) {
+    .container, #mainbox {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    input, textarea {
+        width: calc(100% - 16px);
+    }
+}
+.containera{
+   top: 4%;
+}
+#vision {
+  margin-top: 35%;
+    font-size: 3em;
+    letter-spacing: 15px;
+    color: #0b5e75;
+ 
+    justify-content: center;
+    text-transform: uppercase;
+    width: 100%;
+    -webkit-box-reflect: below 1px linear-gradient(transparent, #0008);
+    line-height: 0.70em;
+    outline: none;
+    align-items: center;
+    text-align: center;
 }
